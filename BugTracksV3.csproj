@@ -29,10 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\LandingPageFrontEnd\img\SplashBackground.svg" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="wwwroot\LandingPageFrontEnd\img\customers\" />
   </ItemGroup>
 

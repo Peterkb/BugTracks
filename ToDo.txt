@@ -37,3 +37,6 @@
 		Renaming of files
 
 	Suggestions with Screenshots
+
+	Useability
+		skip section
