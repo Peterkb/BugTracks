@@ -1,0 +1,39 @@
+﻿Features
+
+	Ticket
+		Labels
+		Checklist
+		Reply via email to ticket
+		Bookmark/Star Ticket
+
+		Move to different project
+
+		Comments
+			Tag someone
+		
+	Templates
+		Project Template
+		Ticket Template
+
+	
+	Dashboard
+		Widgets
+			Kanban Board
+			Timeline
+			Gant Chart
+			Timeline
+			Todo List
+			Files Gallery
+			Text
+			Map
+			Cards View
+			Bookmarks
+			Countdown
+
+			Quote of the day
+
+	Files
+		Click on image to preview instead of download
+		Renaming of files
+
+	Suggestions with Screenshots

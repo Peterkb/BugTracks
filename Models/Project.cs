@@ -43,14 +43,14 @@ namespace BugTracksV3.Models
         [DisplayName("Company")]
         public int? CompanyId { get; set; } //1
 
-        //[DisplayName("Priority")]
-        /*public int? ProjectPriorityId { get; set; }*/  //2
+        [DisplayName("Priority")]
+        public int? ProjectPriorityId { get; set; }
 
         //-- Navigation Properties --//
         public virtual Company? Company { get; set; }
-        //public virtual ProjectPriority ProjectPriority { get; set; }
+        public virtual ProjectPriority? ProjectPriority { get; set; }
 
         public virtual ICollection<ApplicationUser> Members { get; set; } = new HashSet<ApplicationUser>();
-        //public virtual ICollection<Ticket> Tickets { get; set; } = new HashSet<Ticket>();
+        public virtual ICollection<Ticket> Tickets { get; set; } = new HashSet<Ticket>();
     }
 }

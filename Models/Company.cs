@@ -31,8 +31,8 @@ namespace BugTracksV3.Models
         public string? LogoContentType { get; set; }
 
         //-- Navigation Properties --//
-        public virtual ICollection<ApplicationUser>? Members { get; set; }
-        public virtual ICollection<Project>? Projects { get; set; }
-        //public virtual ICollection<Invite> Invites { get; set; }
+        public virtual ICollection<ApplicationUser> Members { get; set; } = new HashSet<ApplicationUser>();
+        public virtual ICollection<Project> Projects { get; set; } = new HashSet<Project>();
+        public virtual ICollection<Invite> Invites { get; set; } = new HashSet<Invite>();
     }
 }
