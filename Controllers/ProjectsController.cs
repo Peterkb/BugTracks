@@ -237,8 +237,7 @@ namespace BugTrackerNet5Mvc.Controllers
                     throw;
                 }
 
-                //TODO: Redirect to  All Projects
-                return RedirectToAction("Index");
+                return RedirectToAction("AllProjects");
             }
 
             return RedirectToAction("Create");

@@ -1,4 +1,4 @@
-﻿namespace BugTracksV3.Models
+﻿namespace BugTracksV3.Models.Enums
 {
     public enum BTTicketStatus
     {
