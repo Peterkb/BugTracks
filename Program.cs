@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using BugTracksV3.Utilities;
+using Microsoft.Extensions.DependencyInjection;
+using BugTracker.Services.Factories;
+using BugTrackerNet5Mvc.Services.Interfaces;
 using BugTracksV3.Areas.Identity.Data;
 using BugTracksV3.Services.Interfaces;
 using BugTracksV3.Services;
 using BugTracker.Services;
-using BugTracksV3.Utilities;
-using Microsoft.Extensions.DependencyInjection;
-using BugTracker.Services.Factories;
 
 var builder = WebApplication.CreateBuilder(args);
 //var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection");;
@@ -25,14 +26,14 @@ builder.Services.AddControllersWithViews();
 
 // Custom Services
 builder.Services.AddScoped<IBTRolesService, BTRolesService>();
-//services.AddScoped<IBTCompanyInfoService, BTCompanyInfoService>();
-//services.AddScoped<IBTProjectService, BTProjectService>();
-//services.AddScoped<IBTTicketService, BTTicketService>();
-//services.AddScoped<IBTTicketHistoryService, BTTicketHistoryService>();
-//services.AddScoped<IBTNotificationService, BTNotificationService>();
-//services.AddScoped<IBTInviteService, BTInviteService>();
-//services.AddScoped<IBTFileService, BTFileService>();
-//services.AddScoped<IBTLookupService, BTLookupService>();
+builder.Services.AddScoped<IBTCompanyInfoService, BTCompanyInfoService>();
+builder.Services.AddScoped<IBTProjectService, BTProjectService>();
+builder.Services.AddScoped<IBTTicketService, BTTicketService>();
+builder.Services.AddScoped<IBTTicketHistoryService, BTTicketHistoryService>();
+builder.Services.AddScoped<IBTNotificationService, BTNotificationService>();
+builder.Services.AddScoped<IBTInviteService, BTInviteService>();
+builder.Services.AddScoped<IBTFileService, BTFileService>();
+builder.Services.AddScoped<IBTLookupService, BTLookupService>();
 
 var app = builder.Build();
 
