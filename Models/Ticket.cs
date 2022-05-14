@@ -48,9 +48,9 @@ namespace BugTracksV3.Models
 
         //String Ids - AppUsers
         [DisplayName("Ticket Owner")]
-        public string OwnerUserId { get; set; } = string.Empty;     //5
+        public string? OwnerUserId { get; set; }     //5
         [DisplayName("Ticket Developer")]
-        public string DeveloperUserId { get; set; } = string.Empty; //6
+        public string? DeveloperUserId { get; set; } //6
 
         //-- Navigation Properties --//
         public virtual Project? Project { get; set; }               //1

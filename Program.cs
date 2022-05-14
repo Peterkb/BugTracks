@@ -8,6 +8,8 @@ using BugTracksV3.Areas.Identity.Data;
 using BugTracksV3.Services.Interfaces;
 using BugTracksV3.Services;
 using BugTracker.Services;
+using BugTracksV3.Models;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 //var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection");;
@@ -35,8 +37,13 @@ builder.Services.AddScoped<IBTInviteService, BTInviteService>();
 builder.Services.AddScoped<IBTFileService, BTFileService>();
 builder.Services.AddScoped<IBTLookupService, BTLookupService>();
 
+builder.Services.AddScoped<IEmailSender, BTEmailService>();
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+
 var app = builder.Build();
 
+//DBs
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 await DataUtility.ManageDataAsync(app);
 
 // Configure the HTTP request pipeline.

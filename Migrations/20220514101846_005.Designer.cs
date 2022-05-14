@@ -3,6 +3,7 @@ using System;
 using BugTracksV3.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BugTracksV3.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220514101846_005")]
+    partial class _005
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -351,12 +353,14 @@ namespace BugTracksV3.Migrations
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("DeveloperUserId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("IsArchived")
                         .HasColumnType("boolean");
 
                     b.Property<string>("OwnerUserId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("ProjectId")
@@ -801,11 +805,15 @@ namespace BugTracksV3.Migrations
                 {
                     b.HasOne("BugTracksV3.Areas.Identity.Data.ApplicationUser", "DeveloperUser")
                         .WithMany()
-                        .HasForeignKey("DeveloperUserId");
+                        .HasForeignKey("DeveloperUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BugTracksV3.Areas.Identity.Data.ApplicationUser", "OwnerUser")
                         .WithMany()
-                        .HasForeignKey("OwnerUserId");
+                        .HasForeignKey("OwnerUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BugTracksV3.Models.Project", "Project")
                         .WithMany("Tickets")
