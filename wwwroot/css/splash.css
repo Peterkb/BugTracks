@@ -12,8 +12,18 @@
 body {
 }
 
-.navbar{
-    height: 100px;
+.bg-light {
+    transition-duration: 300ms;
+    transition-property: background;
+}
+
+.bg-dark {
+    transition-duration: 300ms;
+    transition-property: background;
+}
+
+section{
+    height: 90vh;
 }
 
 #top {
@@ -21,7 +31,6 @@ body {
     background-color: #cccccc;
     background-position: center top;
     background-size: 100% 100%;
-    background-repeat: no-repeat;
     height: 100vh;
 }
 
