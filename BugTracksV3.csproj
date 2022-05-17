@@ -46,10 +46,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\LandingPageFrontEnd\img\customers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css.map" />
     <None Include="wwwroot\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css.map" />
     <None Include="wwwroot\plugins\bootstrap-colorpicker\js\bootstrap-colorpicker.js" />
