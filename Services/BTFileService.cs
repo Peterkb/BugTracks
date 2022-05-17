@@ -7,6 +7,11 @@ namespace BugTracksV3.Services
     {
         private readonly string[] suffixes = { "Bytes", "KB", "GB", "TB", "PB" };
 
+        public string ContentType(IFormFile file)
+        {
+            return file?.ContentType;
+        }
+
         public string DecodeFile(byte[] fileData, string extension)
         {
             if (fileData == null || extension == null) return null;

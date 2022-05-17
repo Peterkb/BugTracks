@@ -9,5 +9,7 @@
         public string GetFileIcon(string file);
 
         public string FormatFileSize(long bytes);
+
+        public string ContentType(IFormFile file);
     }
 }
