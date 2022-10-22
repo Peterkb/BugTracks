@@ -10,44 +10,19 @@ using BugTracksV3.Services;
 using BugTracker.Services;
 using BugTracksV3.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using BugTracksV3.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
-var configuration = builder.Configuration;
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(DataUtility.GetConnectionString(builder.Configuration), o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
+//Abstract Startup Configuration
+builder.AddStandardServices();
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddClaimsPrincipalFactory<BTUserClaimsPrincipalFactory>()
-    .AddDefaultUI()
-    .AddDefaultTokenProviders();
+builder.AddDatabaseServices();
+builder.AddAuthServices();
 
-// Add services to the container.
+builder.AddCustomServices();
 
-//External Logins
-builder.Services.AddAuthentication()
-    .AddGoogle(googleOptions =>
-    {
-        googleOptions.ClientId = configuration["Google:ClientId"];
-        googleOptions.ClientSecret = configuration["Google:ClientSecret"];
-    });
-
-builder.Services.AddControllersWithViews();
-
-// Custom Services
-builder.Services.AddScoped<IBTRolesService, BTRolesService>();
-builder.Services.AddScoped<IBTCompanyInfoService, BTCompanyInfoService>();
-builder.Services.AddScoped<IBTProjectService, BTProjectService>();
-builder.Services.AddScoped<IBTTicketService, BTTicketService>();
-builder.Services.AddScoped<IBTTicketHistoryService, BTTicketHistoryService>();
-builder.Services.AddScoped<IBTNotificationService, BTNotificationService>();
-builder.Services.AddScoped<IBTInviteService, BTInviteService>();
-builder.Services.AddScoped<IBTFileService, BTFileService>();
-builder.Services.AddScoped<IBTLookupService, BTLookupService>();
-
-builder.Services.AddScoped<IEmailSender, BTEmailService>();
-builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.AddEmailServices();
 
 var app = builder.Build();
 
@@ -59,7 +34,6 @@ await DataUtility.ManageDataAsync(app);
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
