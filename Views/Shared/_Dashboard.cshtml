@@ -87,26 +87,6 @@
 						</li>
 					</ul>
 				</li>
-
-				@*Tickets*@
-				<li class="dropdown">
-					<a asp-area="" asp-controller="Tickets" asp-action="Index" class="nav-link dropdown-toggle px-sm-0 px-2" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-						<i class="fs-5 bi-file-earmark-font"></i><span class="ms-1 d-none d-sm-inline">Tickets</span>
-					</a>
-					<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdown">
-						<li><a class="dropdown-item" asp-area="" asp-controller="Tickets" asp-action="Create">New ticket...</a></li>
-						@if (!User.IsInRole(nameof(Roles.Admin)))
-						{
-							<li><a class="dropdown-item" asp-area="" asp-controller="Tickets" asp-action="MyTickets">My Tickets</a></li>
-						}
-						<li><a class="dropdown-item" asp-area="" asp-controller="Tickets" asp-action="AllTickets">All Tickets</a></li>
-						<li><a class="dropdown-item" asp-area="" asp-controller="Tickets" asp-action="ArchivedTickets">Archived Tickets</a></li>
-						@if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
-						{
-							<li><a class="dropdown-item" asp-area="" asp-controller="Tickets" asp-action="UnassignedTickets">Unassigned Tickets</a></li>
-						}
-					</ul>
-				</li>
 			</ul>
 
 			<!-- Right navbar links -->
@@ -360,40 +340,40 @@
 							<ul class="nav nav-treeview">
 								@*New Ticket*@
 								<li class="nav-item">
-									<a class="nav-link">
+									<a class="nav-link" asp-area="" asp-controller="Tickets" asp-action="Create">
 										<i class="far fa-circle nav-icon"></i>
 										<p>New Ticket...</p>
 									</a>
 								</li>
-								@*All Tickets*@
-								<li class="nav-item">
-									<a href="pages/layout/top-nav-sidebar.html" class="nav-link">
-										<i class="far fa-circle nav-icon"></i>
-										<p>All Tickets</p>
-									</a>
-								</li>
 								@if (!User.IsInRole(nameof(Roles.Admin)))
 								{
-									@*My Tickets*@
+									@*All Tickets*@
 									<li class="nav-item">
-										<a href="pages/layout/boxed.html" class="nav-link">
+										<a class="nav-link" asp-area="" asp-controller="Tickets" asp-action="AllTickets">
 											<i class="far fa-circle nav-icon"></i>
-											<p>My Tickets</p>
+											<p>All Tickets</p>
 										</a>
 									</li>
 								}
+								@*My Tickets*@
+								<li class="nav-item">
+									<a class="nav-link" asp-area="" asp-controller="Tickets" asp-action="MyTickets">
+										<i class="far fa-circle nav-icon"></i>
+										<p>My Tickets</p>
+									</a>
+								</li>
 								@if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
 								{
 									@*Archived Tickets*@
 									<li class="nav-item">
-										<a class="nav-link">
+										<a class="nav-link" asp-area="" asp-controller="Tickets" asp-action="ArchivedTickets">
 											<i class="far fa-circle nav-icon"></i>
 											<p>Archived Tickets</p>
 										</a>
 									</li>
 									@*Unassigned Tickets*@
 									<li class="nav-item">
-										<a class="nav-link">
+										<a class="nav-link" asp-area="" asp-controller="Tickets" asp-action="UnassignedTickets">
 											<i class="far fa-circle nav-icon"></i>
 											<p>Unassigned Tickets</p>
 										</a>
