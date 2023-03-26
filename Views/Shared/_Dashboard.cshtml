@@ -6,6 +6,7 @@
 @{
 	ApplicationUser btUser = await UserManager.GetUserAsync(User);
 	string imgSize = "40px";
+	string appName = "TicketFlux";
 }
 
 <!DOCTYPE html>
@@ -13,40 +14,39 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>@ViewData["Title"] - Bug Tracks</title>
+	<title>@ViewData["Title"] - @appName</title>
 
 	<!-- Favicon -->
 	<link rel="icon" href="~/favicon.ico" />
-
 	<!-- Google Font: Poppins -->
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,600&display=swap" rel="stylesheet">
 
 	<!-- Font Awesome -->
 	<script src="https://kit.fontawesome.com/5db21ba9c6.js" crossorigin="anonymous"></script>
+	@*<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">*@
 
 	<!-- Ionicons -->
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
 	<!-- Tempusdominus Bootstrap 4 -->
-	<link rel="stylesheet" href="~/DashboardFrontEnd/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+	<link rel="stylesheet" href="~/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 	<!-- iCheck -->
-	<link rel="stylesheet" href="~/fontplugins/icheck-bootstrap/icheck-bootstrap.min.css">
+	<link rel="stylesheet" href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
 	<!-- JQVMap -->
-	<link rel="stylesheet" href="~/DashboardFrontEnd/plugins/jqvmap/jqvmap.min.css">
+	<link rel="stylesheet" href="~/plugins/jqvmap/jqvmap.min.css">
 	<!-- Theme style -->
-	<link rel="stylesheet" href="~/DashboardFrontEnd/dist/css/adminlte.min.css">
+	<link rel="stylesheet" href="~/css/adminlte.min.css">
 	<!-- overlayScrollbars -->
-	<link rel="stylesheet" href="~/DashboardFrontEnd/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+	<link rel="stylesheet" href="~/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 	<!-- Daterange picker -->
-	<link rel="stylesheet" href="~/DashboardFrontEnd/plugins/daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" href="~/plugins/daterangepicker/daterangepicker.css">
 	<!-- summernote -->
-	<link rel="stylesheet" href="~/DashboardFrontEnd/plugins/summernote/summernote-bs4.min.css">
-	<!-- Bootstrap -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+	<link rel="stylesheet" href="~/plugins/summernote/summernote-bs4.min.css">
 	<!-- Site CSS -->
 	<link href="~/css/site.css" />
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed dark-mode">
 	<div class="wrapper">
 
 		<!-- Preloader -->
@@ -85,29 +85,6 @@
 								<button id="logout" type="submit" class="dropdown-item">Logout</button>
 							</form>
 						</li>
-					</ul>
-				</li>
-
-				@*Projects*@
-				<li class="dropdown">
-					<a asp-area="" asp-controller="Projects" asp-action="Index" class="nav-link dropdown-toggle px-sm-0 px-2" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-						<i class="fs-5 bi-file-earmark-ppt"></i><span class="ms-1 d-none d-sm-inline">Projects</span>
-					</a>
-					<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdown">
-						@if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.Admin)))
-						{
-							<li><a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="Create">New project...</a></li>
-						}
-						@if (!User.IsInRole(nameof(Roles.Admin)))
-						{
-							<li><a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="MyProjects">My Projects</a></li>
-						}
-						<li><a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="AllProjects">All Projects</a></li>
-						<li><a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="ArchivedProjects">Archived Projects</a></li>
-						@if (User.IsInRole(nameof(Roles.Admin)))
-						{
-							<li><a class="dropdown-item" asp-area="" asp-controller="Projects" asp-action="UnassignedProjects">Unassigned Projects</a></li>
-						}
 					</ul>
 				</li>
 
@@ -259,8 +236,8 @@
 		<aside class="main-sidebar sidebar-dark-primary elevation-4">
 			<!-- Brand Logo -->
 			<a href="index3.html" class="brand-link">
-				<img src="https://pic.onlinewebfonts.com/svg/img_488455.png" alt="Bug Tracks Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-				<span class="brand-text fw-bold">Bug Tracks</span>
+				<img src="~/img/site/SiteLogo.svg" alt="@appName Logo" class="brand-image img-circle" style="opacity: .8">
+				<span class="brand-text fw-bold">@appName</span>
 			</a>
 
 			<!-- Sidebar -->
@@ -328,7 +305,7 @@
 								@if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.Admin)))
 								{	@*New Project*@
 									<li class="nav-item">
-										<a class="nav-link">
+										<a class="nav-link" asp-area="" asp-controller="Projects" asp-action="Create">
 											<i class="far fa-circle nav-icon"></i>
 											<p>New Project...</p>
 										</a>
@@ -336,7 +313,7 @@
 								}
 								@*All Projects*@
 								<li class="nav-item">
-									<a class="nav-link">
+									<a class="nav-link" asp-area="" asp-controller="Projects" asp-action="AllProjects">
 										<i class="far fa-circle nav-icon"></i>
 										<p>All Projects</p>
 									</a>
@@ -345,7 +322,7 @@
 								{
 									@*My Projects*@
 									<li class="nav-item">
-										<a class="nav-link">
+										<a class="nav-link" asp-area="" asp-controller="Projects" asp-action="MyProjects">
 											<i class="far fa-circle nav-icon"></i>
 											<p>My Projects</p>
 										</a>
@@ -355,14 +332,14 @@
 								{
 									@*Archived Projects*@
 									<li class="nav-item">
-										<a class="nav-link">
+										<a class="nav-link" asp-area="" asp-controller="Projects" asp-action="ArchivedProjects">
 											<i class="far fa-circle nav-icon"></i>
 											<p>Archived Projects</p>
 										</a>
 									</li>
 									@*Unassigned Projects*@
 									<li class="nav-item">
-										<a class="nav-link">
+										<a class="nav-link" asp-area="" asp-controller="Projects" asp-action="UnassignedProjects">
 											<i class="far fa-circle nav-icon"></i>
 											<p>Unassigned Projects</p>
 										</a>
@@ -426,46 +403,6 @@
 						</li>
 
 
-
-
-
-
-
-						<li class="nav-item">
-							<a href="#" class="nav-link">
-								<i class="nav-icon fas fa-chart-pie"></i>
-								<p>
-									Charts
-									<i class="right fas fa-angle-left"></i>
-								</p>
-							</a>
-							<ul class="nav nav-treeview">
-								<li class="nav-item">
-									<a href="pages/charts/chartjs.html" class="nav-link">
-										<i class="far fa-circle nav-icon"></i>
-										<p>ChartJS</p>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="pages/charts/flot.html" class="nav-link">
-										<i class="far fa-circle nav-icon"></i>
-										<p>Flot</p>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="pages/charts/inline.html" class="nav-link">
-										<i class="far fa-circle nav-icon"></i>
-										<p>Inline</p>
-									</a>
-								</li>
-								<li class="nav-item">
-									<a href="pages/charts/uplot.html" class="nav-link">
-										<i class="far fa-circle nav-icon"></i>
-										<p>uPlot</p>
-									</a>
-								</li>
-							</ul>
-						</li>
 						<li class="nav-item">
 							<a href="#" class="nav-link">
 								<i class="nav-icon fas fa-tree"></i>
@@ -894,7 +831,7 @@
 			</div>
 			<!-- /.content-header -->
 			<!-- Main content -->
-			<section class="content">
+			<section class="content ">
 				<div class="container-fluid">
 					<main role="main" class="pb-3">
 						@RenderBody()
@@ -905,7 +842,7 @@
 		</div>
 		<!-- /.content-wrapper -->
 		<footer class="main-footer">
-			<strong>Copyright &copy; 2022 <a href="https://adminlte.io">Bug Tracks</a>.</strong>
+			<strong>Copyright &copy; 2022 <a href="#">@appName</a>.</strong>
 			All rights reserved.
 			<div class="float-right d-none d-sm-inline-block">
 				<b>Version</b> 0.0.1
@@ -928,7 +865,8 @@
 		$.widget.bridge('uibutton', $.ui.button)
 	</script>
 	<!-- Bootstrap 4 -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	@*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>*@
+
 	<!-- ChartJS -->
 	<script src="~/plugins/chart.js/Chart.min.js"></script>
 	<!-- Sparkline -->

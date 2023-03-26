@@ -1,3 +1,15 @@
-﻿@{
-    Layout = "_Splash";
+﻿@using BugTracksV3.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity;
+
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    if(SignInManager.IsSignedIn(User))
+    {
+        Layout = "_Dashboard";
+    }
+    else
+    {
+        Layout = "_Splash";
+    }
 }
