@@ -53,16 +53,16 @@ public class DataUtility
 		//Migration: This is the programmatic equivalent to Update-Database
 		await dbContextSvc.Database.MigrateAsync();
 
-		await SeedRolesAsync(roleManagerSvc);
-		await SeedDefaultCompaniesAsync(dbContextSvc);
-		await SeedDefaultUsersAsync(userManagerSvc);
-		await SeedDemoUsersAsync(userManagerSvc);
-		await SeedDefaultTicketTypeAsync(dbContextSvc);
-		await SeedDefaultTicketStatusAsync(dbContextSvc);
-		await SeedDefaultTicketPriorityAsync(dbContextSvc);
-		await SeedDefaultProjectPriorityAsync(dbContextSvc);
-		await SeedDefautProjectsAsync(dbContextSvc);
-		await SeedDefautTicketsAsync(dbContextSvc);
+		//await SeedRolesAsync(roleManagerSvc);
+		//await SeedDefaultCompaniesAsync(dbContextSvc);
+		//await SeedDefaultUsersAsync(userManagerSvc);
+		//await SeedDemoUsersAsync(userManagerSvc);
+		//await SeedDefaultTicketTypeAsync(dbContextSvc);
+		//await SeedDefaultTicketStatusAsync(dbContextSvc);
+		//await SeedDefaultTicketPriorityAsync(dbContextSvc);
+		//await SeedDefaultProjectPriorityAsync(dbContextSvc);
+		//await SeedDefautProjectsAsync(dbContextSvc);
+		//await SeedDefautTicketsAsync(dbContextSvc);
 	}
 
 	//Users

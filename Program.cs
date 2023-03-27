@@ -1,16 +1,5 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using BugTracksV3.Utilities;
-using Microsoft.Extensions.DependencyInjection;
-using BugTracker.Services.Factories;
-using BugTrackerNet5Mvc.Services.Interfaces;
-using BugTracksV3.Areas.Identity.Data;
-using BugTracksV3.Services.Interfaces;
-using BugTracksV3.Services;
-using BugTracker.Services;
-using BugTracksV3.Models;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using BugTracksV3.Configurations;
+using BugTracksV3.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,13 +11,13 @@ builder.AddAuthServices();
 
 builder.AddCustomServices();
 
-builder.AddEmailServices();
+//builder.AddEmailServices();
 
 var app = builder.Build();
 
 //DBs
-//AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-//await DataUtility.ManageDataAsync(app);
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+await DataUtility.ManageDataAsync(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
