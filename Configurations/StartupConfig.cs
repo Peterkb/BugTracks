@@ -25,7 +25,7 @@ public static class StartupConfig
 		var connectionString = DataUtility.GetConnectionString(builder.Configuration);
 
 		builder.Services.AddDbContext<ApplicationDbContext>(options =>
-		options.UseNpgsql(connectionString, o => o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
+		options.UseNpgsql(connectionString));
 	}
 
 	public static void AddCustomServices(this WebApplicationBuilder builder)
