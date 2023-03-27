@@ -27,8 +27,8 @@ builder.AddEmailServices();
 var app = builder.Build();
 
 //DBs
-AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-await DataUtility.ManageDataAsync(app);
+//AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+//await DataUtility.ManageDataAsync(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
