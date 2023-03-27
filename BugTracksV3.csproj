@@ -5,9 +5,7 @@
 	<Nullable>enable</Nullable>
 	<ImplicitUsings>enable</ImplicitUsings>
 	<UserSecretsId>30715124-e1dc-434b-823c-f6e62faaa23c</UserSecretsId>
-	<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-	<DockerfileContext>.</DockerfileContext>
-	  <InvariantGlobalization>true</InvariantGlobalization>
+	<InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 
   <ItemGroup>
@@ -160,8 +158,6 @@
 	<None Include="wwwroot\plugins\codemirror\mode\cypher\cypher.js" />
 	<None Include="wwwroot\plugins\codemirror\mode\dart\dart.js" />
 	<None Include="wwwroot\plugins\codemirror\mode\diff\diff.js" />
-	<None Include="wwwroot\plugins\codemirror\mode\django\django.js" />
-	<None Include="wwwroot\plugins\codemirror\mode\dockerfile\dockerfile.js" />
 	<None Include="wwwroot\plugins\codemirror\mode\dtd\dtd.js" />
 	<None Include="wwwroot\plugins\codemirror\mode\dylan\dylan.js" />
 	<None Include="wwwroot\plugins\codemirror\mode\d\d.js" />
