@@ -11,9 +11,9 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
+    @*<li class="nav-item">
         <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hi @btUser.FullName</a>
-    </li>
+    </li>*@
     <li>
         <a asp-action="Dashboard" asp-controller="Home" class="nav-link">Dashboard</a>        
     </li>

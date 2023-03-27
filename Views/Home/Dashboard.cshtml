@@ -28,6 +28,22 @@
 	}
 </style>
 
+<!-- Content Header (Page header) -->
+<div class="content-header">
+	<div class="container-fluid">
+		<div class="row mb-2">
+			<div class="col-sm-6">
+				<h1 class="m-0">@ViewData["Title"]</h1>
+			</div><!-- /.col -->
+			<div class="col-sm-6">
+				<ol class="breadcrumb float-sm-right">
+					<li class="breadcrumb-item"><a href="#">Home</a></li>
+					<li class="breadcrumb-item active">@ViewData["Title"]</li>
+				</ol>
+			</div>
+		</div>
+	</div>
+</div>
 <section class="content">
 	<div class="container-fluid">
 		<div class="row">
@@ -38,9 +54,16 @@
 						<h3>@Model.Projects.Where(p => p.StartDate < DateTime.Now && p.EndDate > DateTime.Now).Count()</h3>
 						<p>Active Projects</p>
 						<div class="icon">
-							<i class="ion ion-bag"></i>
+							<i class="fas fa-book"></i>							
 						</div>
-						<a asp-action="AllProjects" asp-controller="Projects" class="small-box-footer">All Projects<i class="fas fa-arrow-circle-right"></i></a>
+						@if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+						{
+							<a asp-action="AllProjects" asp-controller="Projects" class="small-box-footer">All Projects<i class="ml-2 fas fa-arrow-circle-right"></i></a>
+						}
+						else
+						{
+							<a asp-action="MyProjects" asp-controller="Projects" class="small-box-footer">My Projects<i class="ml-2 fas fa-arrow-circle-right"></i></a>
+						}
 					</div>
 				</div>
 			</div>
@@ -51,9 +74,9 @@
 						<h3>@Model.Tickets.Count()</h3>
 						<p>Total Tickets</p>
 						<div class="icon">
-							<i class="ion ion-stats-bars"></i>
+							<i class="fas fa-copy"></i>
 						</div>
-						<a asp-action="AllTickets" asp-controller="Tickets" class="small-box-footer">All Tickets<i class="fas fa-arrow-circle-right"></i></a>
+						<a asp-action="AllTickets" asp-controller="Tickets" class="small-box-footer">All Tickets<i class="ml-2 fas fa-arrow-circle-right"></i></a>
 					</div>
 				</div>
 			</div>
@@ -66,7 +89,7 @@
 						<div class="icon">
 							<i class="ion ion-pie-graph"></i>
 						</div>
-						<a asp-action="AllTickets" asp-controller="Tickets" class="small-box-footer">All Unassigned Tickets<i class="fas fa-arrow-circle-right"></i></a>
+						<a asp-action="AllTickets" asp-controller="Tickets" class="small-box-footer">All Unassigned Tickets<i class="ml-2 fas fa-arrow-circle-right"></i></a>
 					</div>
 				</div>
 			</div>
@@ -187,7 +210,7 @@
 									@foreach (var project in Model.Projects.OrderByDescending(d => d.EndDate))
 									{
 										<tr>
-											<td><a asp-action="Details" asp-controller="Project" asp-route-id="@project.Id" style="color:black"><strong>@project.Name</strong></a></td>
+											<td><a asp-action="Details" asp-controller="Projects" asp-route-id="@project.Id" style="color:black"><strong>@project.Name</strong></a></td>
 											<td><span style="font-size:small">@project.StartDate.ToString("yyyy/MMM/dd")</span></td>
 											<td><span style="font-size:small">@project.EndDate.ToString("yyyy/MMM/dd")</span></td>
 											<td><span class="badge bg-dark">@project.ProjectPriority?.Name</span></td>
