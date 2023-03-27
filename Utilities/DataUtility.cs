@@ -39,7 +39,7 @@ public class DataUtility
 
 	public static async Task ManageDataAsync(IHost host)
 	{
-		using var svcScope = host.Services.CreateScope();
+		var svcScope = host.Services.CreateScope();
 		var svcProvider = svcScope.ServiceProvider;
 		//Service: An instance of RoleManager
 		var dbContextSvc = svcProvider.GetRequiredService<ApplicationDbContext>();
