@@ -11,6 +11,7 @@ public class DataUtility
 	//Connection String Builder
 	public static string GetConnectionString(IConfiguration configuration)
 	{
+		// Unhandled exception. System.ArgumentNullException: Value cannot be null. (Parameter 'connectionString')
 		var connectionString = configuration.GetSection("pgSettings")["pgConnection"];
 		var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
