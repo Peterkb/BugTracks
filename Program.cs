@@ -6,18 +6,18 @@ var builder = WebApplication.CreateBuilder(args);
 //Abstract Startup Configuration
 builder.AddStandardServices();
 
-//builder.AddDatabaseServices();
-//builder.AddAuthServices();
+builder.AddDatabaseServices();
+builder.AddAuthServices();
 
-//builder.AddCustomServices();
+builder.AddCustomServices();
 
-//builder.AddEmailServices();
+builder.AddEmailServices();
 
 var app = builder.Build();
 
 //DBs
-//AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-//await DataUtility.ManageDataAsync(app);
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+await DataUtility.ManageDataAsync(app);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

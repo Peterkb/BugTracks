@@ -1,5 +1,4 @@
-﻿using BugTracker.Services;
-using BugTrackerNet5Mvc.Services.Interfaces;
+﻿
 using BugTracksV3.Areas.Identity.Data;
 using BugTracksV3.Services.Interfaces;
 using BugTracksV3.Services;
@@ -10,6 +9,8 @@ using BugTracker.Services.Factories;
 using Microsoft.AspNetCore.Identity;
 using BugTracksV3.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using BugTracker.Services;
+using BugTrackerNet5Mvc.Services.Interfaces;
 
 namespace BugTracksV3.Configurations;
 

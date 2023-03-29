@@ -1,72 +1,255 @@
 ﻿@{
-	ViewData["Title"] = "TicketFlux";
-	Layout = "~/Views/Shared/_Splash.cshtml";
+	ViewData["Title"] = "Accelerating Project Success, One Ticket at a Time";
 }
 
-@*Features*@
-<section class="row pb-3">
-	<div class="col pb-3 text-center mb-3" id="features">
-		<h1 class="mb-3">If everyone is moving forward together, then success takes care of itself." – Henry Ford</h1>
-		<h5 class="mb-3">Features to get you and your team going, like <span class="fw-bold">Role Based Authorization</span>, Creating <span class="fw-bold">Projects</span>, managing <span class="fw-bold">Tickets</span>, and more.</h5>
-		<a class="btn btn-outline-primary mb-5 btn-lg" role="button" id="register" asp-area="Identity" asp-page="/Account/Register">Get started -></a>
+<!-- Hero Area -->
+<div class="hero-area-l-17 position-relative">
+	<div class="container">
+		<div class="row position-relative justify-content-center">
+			<div class="col-xxl-6 col-xl-7 col-lg-8 col-md-11 order-lg-1 order-1" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
+				<div class="content text-center">
+					<h1 class="d-flex justify-content-center">
+						@*<div class="clr-red"><i class="fas fa-edit fa-size fa-xs ft-red"></i> Log it</div>
+						,&nbsp;						
+						<div class="clr-blue"><i class="fas fa-search fa-xs ft-blue"></i> Track it</div>
+						,&nbsp;						
+						<div class="clr-green"><i class="fas fa-check fa-xs ft-green"></i> Done</div>*@
+						<div class="fa-center">
+							<i class="fas fa-edit fa-xs ft-red"></i>
+						</div>
+						<div class="text">&nbsp;Log it,&nbsp;</div>
 
-		<h5>Features</h5>
-		<ul>
-			<li id="feature1">Feature 1</li>
-			<li id="feature2">Feature 2</li>
-			<li id="feature3">Feature 3</li>
-			<li id="feature4">Feature 4</li>
-			<li id="feature5">Feature 5</li>
-		</ul>
+						<div class="fa-center">
+							<i class="fas fa-search fa-xs ft-blue"></i>
+						</div>
+						<div class="text">&nbsp;Track it,&nbsp;</div>
 
-		<h5>Quotes</h5>
-		<ul>
-			<li>"Hard work beats talent if talent doesn't work hard." – Tim Notke</li>
-			<li>"If you want to go fast, go alone. If you want to go far, go together." – African Proverb</li>
-			<li>"None of us, including me, ever do great things. But we can all do small things, with great love, and together we can do something wonderful." – Mother Teresa</li>
-			<li>"Cooperation is the thorough conviction that nobody can get there unless everybody gets there." – Virginia Burden</li>
-		</ul>
-	</div>
-</section>
-
-<hr />
-
-@*Contact*@
-<section class="row text-center pb-3" id="contact">
-	<div class="col">
-		<h2>Get in touch</h2>
-		<div class="col">
-			<script src="https://unpkg.com/@@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-			<lottie-player src="https://assets6.lottiefiles.com/packages/lf20_ygvu4b4g.json" background="transparent" speed="0.7" style="width: 300px; height: 300px;" loop autoplay></lottie-player>
+						<div class="fa-center">
+							<i class="fas fa-check fa-xs ft-green"></i>
+						</div>
+						<div class="text">&nbsp;Done</div>
+					</h1>
+					<p>Accelerating Project Success, One Ticket at a Time.</p>
+					<a href="#" class="btn">Demo TicketFlux</a>
+					<span>free to use</span>
+				</div>
+			</div>
+			<div class="col-xl-8 col-lg-9 order-lg-1 order-0">
+				<div class="hero-area-image">
+					<img src="~/img/landing/l8/hero-img.png" alt="" class="w-100">
+				</div>
+			</div>
 		</div>
 	</div>
-
-	<div class="col">
-		<div class="col">
-			<h5>Get in touch</h5>
-			<form>
-				<div class="form-floating mb-3">
-					<input type="text" class="form-control" placeholder="Name" />
-					<label for="floatingInput">Name</label>
+</div>
+<!--Feature Area -->
+<div class="feature-area-l-17 position-relative">
+	<div class="container">
+		<div class="row feature-area-l-17-items justify-content-center text-center">
+			<div class="col-lg-4 col-md-6 col-sm-9">
+				<div class="single-features single-border position-relative">
+					<div class="circle-dot-1">
+						<i class="fas fa-circle"></i>
+					</div>
+					<h4>Unified Tracking Hub</h4>
+					<p>
+						See everything at a glance directly from you Dashboard.
+						Easily track, prioritize, and resolve project issues.
+					</p>
 				</div>
-				<div class="form-floating mb-3">
-					<input type="email" class="form-control" placeholder="Email" />
-					<label for="floatingInput">Email</label>
+			</div>
+			<div class="col-lg-4 col-md-6 col-sm-9">
+				<div class="single-features single-border position-relative">
+					<div class="circle-dot-2">
+						<i class="fas fa-circle"></i>
+					</div>
+					<h4>Accelerate Collaboration</h4>
+					<p>
+						Streamline communication and productivity by enhancing team collaboration.
+					</p>
 				</div>
-				<div class="form-floating mb-3">
-					<input type="text" class="form-control" placeholder="Subject" />
-					<label for="floatingInput">Subject</label>
+			</div>
+			<div class="col-lg-4 col-md-6 col-sm-9">
+				<div class="single-features">
+					<div class="circle-dot-3">
+						<i class="fas fa-circle"></i>
+					</div>
+					<h4>Everything in One Place</h4>
+					<p>
+						Message, email and talk to team members without having to leave the platform.
+					</p>
 				</div>
-				<div class="form-floating mb-3">
-					<textarea class="form-control" type="text" placeholder="Email" ></textarea>
-					<label for="floatingTextarea">Email</label>
-				</div>
-				<button class="btn btn-primary">Submit</button>
-			</form>
+			</div>
 		</div>
 	</div>
-</section>
+</div>
+<!--Content Area 1-->
+<div class="content-area-l-17-1" id="featureOne">
+	<div class="container">
+		<div class="row align-items-center justify-content-center">
+			<div class="col-xl-10 col-lg-12">
+				<div class="row align-items-center justify-content-center">
+					<div class="col-lg-6 col-md-8" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
+						<div class="content-img position-relative">
+							<div class="image-1">
+								<img src="~/img/landing/l8/content-image-1.png" alt="">
+							</div>
+							<div class="image-2">
+								<img src="~/img/landing/l8/content-image-2.png" alt="">
+							</div>
+						</div>
+					</div>
+					<div class="offset-xxl-1 col-xxl-5 col-xl-6 col-lg-6 col-md-8" data-aos="fade-left" data-aos-duration="800" data-aos-once="true">
+						<div class="content section-heading-11">
+							<h2>Unified Tracking Hub.</h2>
+							<p>
+								Get a fast overview of your project's progress with a visually appealing and intuitive Dashboard allowing you to effortlessly track, prioritize, and resolve project issues.
+							</p>
+							<a href="#" class="btn focus-reset">Get Tracking!</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Content Area 2-->
+<div class="content-area-l-17-2" id="featureTwo">
+	<div class="container">
+		<div class="row align-items-center justify-content-center">
+			<div class="col-xl-10 col-lg-12">
+				<div class="row align-items-center justify-content-center">
+					<div class="col-xxl-5 col-xl-6 col-lg-6 col-md-8 order-lg-1 order-1" data-aos="fade-left" data-aos-duration="800" data-aos-once="true">
+						<div class="content section-heading-11">
+							<h2>Accelerate Collaboration.</h2>
+							<p>
+								Foster a high-performing team environment with TicketFlux's collaboration features. Streamline communication, effortlessly share ideas, and drive productivity by enhancing team synergy. Watch your project thrive!
+							</p>
+							<a href="#" class="btn focus-reset">Get Collaborating!</a>
+						</div>
+					</div>
+					<div class="offset-xxl-1 col-xxl-6 col-xl-6 col-lg-6 col-md-8 order-lg-1 order-0" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
+						<div class="content-img position-relative">
+							<div class="image-1">
+								<img src="~/img/landing/l8/content-image-3.png" alt="">
+							</div>
+							<div class="image-2">
+								<img src="~/img/landing/l8/content-image-4.png" alt="">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Content Area 3-->
+<div class="content-area-l-17-1" id="featureThree">
+	<div class="container">
+		<div class="row align-items-center justify-content-center">
+			<div class="col-xl-10 col-lg-12">
+				<div class="row align-items-center justify-content-center">
+					<div class="col-lg-6 col-md-8" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
+						<div class="content-img position-relative">
+							<div class="image-1">
+								<img src="~/img/landing/l8/content-image-1.png" alt="">
+							</div>
+							<div class="image-2">
+								<img src="~/img/landing/l8/content-image-2.png" alt="">
+							</div>
+						</div>
+					</div>
+					<div class="offset-xxl-1 col-xxl-5 col-xl-6 col-lg-6 col-md-8" data-aos="fade-left" data-aos-duration="800" data-aos-once="true">
+						<div class="content section-heading-11">
+							<h2>Role Based Security</h2>
+							<p>
+								Safeguard your project data with robust role-based security features. Assign appropriate access levels and permissions based on member roles. Experience peace of mind and maintain control over your project with our secure platform.
+							</p>
+							<a href="#" class="btn focus-reset">Start Safely Now!</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Brand Area-->
+<div class="brand-area-l-17 pt-5">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-xl-9 col-lg-11 col-md-12">
+				<div class="content text-center">
+					<p>Tools & Technologies used to make TicketFlux work for you.</p>
+				</div>
+				<div class="brand-area-l-17-items d-flex justify-content-center justify-content-xl-between align-items-center flex-wrap ">
+					@*HTML*@
+					<div class="single-brand " data-aos="fade-right" data-aos-duration="700" data-aos-once="true">
+						<img src="~/img/icons/html5/html5-plain.svg" alt="">
+					</div>
+					@*CSS*@
+					<div class="single-brand " data-aos="fade-right" data-aos-duration="500" data-aos-once="true">
+						<img src="~/img/icons/css3/css3-plain.svg" />
+					</div>
+					@*Bootstrap*@
+					<div class="single-brand " data-aos="fade-right" data-aos-duration="500" data-aos-once="true">
+						<img src="~/img/icons/bootstrap/bootstrap-plain.svg" />
+					</div>
+					@*JavaScript*@
+					<div class="single-brand " data-aos="fade-right" data-aos-duration="500" data-aos-once="true">
+						<img src="~/img/icons/javascript/javascript-plain.svg" />
+					</div>
 
-@section scripts{
-<script src="~/js/splash.js"></script>
-}
+					@*Vertical Divider*@
+					<div class="single-brand " data-aos="fade-right" data-aos-duration="500" data-aos-once="true">
+						<div class="vertical-divider border-end border-3 border-light" data-aos="fade-right" data-aos-duration="500" data-aos-once="true"></div>
+					</div>
+
+					@*CSharp*@
+					<div class="single-brand " data-aos="fade-right" data-aos-duration="500" data-aos-once="true">
+						<img src="~/img/icons/csharp/csharp-plain.svg" />
+					</div>
+					@*Asp.Net Core*@
+					<div class="single-brand " data-aos="fade-right" data-aos-duration="500" data-aos-once="true">
+						<img src="~/img/icons/dotnetcore/dotnetcore-original.svg" />
+					</div>
+					@*PostgreSql*@
+					<div class="single-brand " data-aos="fade-right" data-aos-duration="500" data-aos-once="true">
+						<img src="~/img/icons/postgresql/postgresql-plain.svg" />
+					</div>
+
+					@*Vertical Divider*@
+					<div class="single-brand " data-aos="fade-right" data-aos-duration="500" data-aos-once="true">
+						<div class="vertical-divider border-end border-3 border-light" data-aos="fade-right" data-aos-duration="500" data-aos-once="true"></div>
+					</div>
+
+					@*Git*@
+					<div class="single-brand " data-aos="fade-right" data-aos-duration="500" data-aos-once="true">
+						<img src="~/img/icons/git/git-plain.svg" />
+					</div>
+					@*GitHub*@
+					<div class="single-brand " data-aos="fade-right" data-aos-duration="500" data-aos-once="true">
+						<img src="~/img/icons/github/github-original.svg" />
+					</div>
+					@*Railway*@
+					<div class="single-brand " data-aos="fade-right" data-aos-duration="500" data-aos-once="true">
+						<img src="~/img/icons/railway/railway-plain.svg" />
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--CTA Area-->
+<div class="cta-area-l-17">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-10">
+				<div class="d-md-flex justify-content-between text-align-lg-start text-center align-items-center">
+					<h2>Manage your project tickets in one place</h2>
+					<a href="#" class="btn">Get Started</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
