@@ -54,16 +54,16 @@ public class DataUtility
 		//Migration: This is the programmatic equivalent to Update-Database
 		await dbContextSvc.Database.MigrateAsync();
 
-		//await SeedRolesAsync(roleManagerSvc);
-		//await SeedDefaultCompaniesAsync(dbContextSvc);
-		//await SeedDefaultUsersAsync(userManagerSvc);
-		//await SeedDemoUsersAsync(userManagerSvc);
-		//await SeedDefaultTicketTypeAsync(dbContextSvc);
-		//await SeedDefaultTicketStatusAsync(dbContextSvc);
-		//await SeedDefaultTicketPriorityAsync(dbContextSvc);
-		//await SeedDefaultProjectPriorityAsync(dbContextSvc);
-		//await SeedDefautProjectsAsync(dbContextSvc);
-		//await SeedDefautTicketsAsync(dbContextSvc);
+		await SeedRolesAsync(roleManagerSvc);
+		await SeedDefaultCompaniesAsync(dbContextSvc);
+		await SeedDefaultUsersAsync(userManagerSvc);
+		await SeedDemoUsersAsync(userManagerSvc);
+		await SeedDefaultTicketTypeAsync(dbContextSvc);
+		await SeedDefaultTicketStatusAsync(dbContextSvc);
+		await SeedDefaultTicketPriorityAsync(dbContextSvc);
+		await SeedDefaultProjectPriorityAsync(dbContextSvc);
+		await SeedDefautProjectsAsync(dbContextSvc);
+		await SeedDefautTicketsAsync(dbContextSvc);
 	}
 
 	//Users
@@ -85,7 +85,7 @@ public class DataUtility
 		try
 		{
 			IList<Company> defaultcompanies = new List<Company>() {
-				new Company() { Name = "Peter Bredell", Description="Personal Coding Space" },
+				new Company() { Name = "Brede Code", Description="Personal Coding Space" },
 			};
 
 			var dbCompanies = context.Companies.Select(c => c.Name).ToList();
