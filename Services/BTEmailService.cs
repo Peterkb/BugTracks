@@ -7,47 +7,48 @@ using MimeKit;
 
 namespace BugTracksV3.Services
 {
-    public class BTEmailService : IEmailSender
-    {
-        private readonly MailSettings _mailSettings;
+	public class BTEmailService : IEmailSender
+	{
+		//TODO: Set up email for RAILWAY!!
+		private readonly MailSettings _mailSettings;
 
-        public BTEmailService(IOptions<MailSettings> mailSettings)
-        {
-            _mailSettings = mailSettings.Value;
-        }
+		public BTEmailService(IOptions<MailSettings> mailSettings)
+		{
+			_mailSettings = mailSettings.Value;
+		}
 
-        public IOptions<MailSettings> MailSettings { get; }
+		public IOptions<MailSettings> MailSettings { get; }
 
-        public async Task SendEmailAsync(string emailTo, string subject, string htmlMessage)
-        {
-            MimeMessage email = new();
+		public async Task SendEmailAsync(string emailTo, string subject, string htmlMessage)
+		{
+			MimeMessage email = new();
 
-            email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
-            email.To.Add(MailboxAddress.Parse(emailTo));
-            email.Subject = subject;
+			email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
+			email.To.Add(MailboxAddress.Parse(emailTo));
+			email.Subject = subject;
 
-            var builder = new BodyBuilder
-            {
-                HtmlBody = htmlMessage
-            };
+			var builder = new BodyBuilder
+			{
+				HtmlBody = htmlMessage
+			};
 
-            email.Body = builder.ToMessageBody();
+			email.Body = builder.ToMessageBody();
 
-            try
-            {
-                using var smtp = new SmtpClient();
-                smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-                smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
+			try
+			{
+				using var smtp = new SmtpClient();
+				smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
+				smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
 
-                await smtp.SendAsync(email);
+				await smtp.SendAsync(email);
 
-                smtp.Disconnect(true);
-            }
-            catch (Exception)
-            {
+				smtp.Disconnect(true);
+			}
+			catch (Exception)
+			{
 
-                throw;
-            }
-        }
-    }
+				throw;
+			}
+		}
+	}
 }

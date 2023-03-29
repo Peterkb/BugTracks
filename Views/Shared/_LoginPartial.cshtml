@@ -8,28 +8,24 @@
     ApplicationUser btUser = await UserManager.GetUserAsync(User);
 }
 
-<ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
     @*<li class="nav-item">
         <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hi @btUser.FullName</a>
     </li>*@
-    <li>
-        <a asp-action="Dashboard" asp-controller="Home" class="nav-link">Dashboard</a>        
-    </li>
-    <li class="nav-item">
-        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" type="submit" class="nav-link btn btn-outline-primary">Logout</button>
-        </form>
-    </li>
+    <a asp-action="Dashboard" asp-controller="Home" class="btn sign-in-btn focus-reset">Dashboard</a>        
+    
+    <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        <button id="logout" type="submit" class="start-trail-btn btn focus-reset">Logout</button>
+    </form>
 }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link" id="register" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Url.Action("Dashboard.", "Home", new { area = "" })">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" id="login" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Dashboard", "Home", new { area = "" })">Login</a>
-    </li>
+    <a class="btn sign-in-btn focus-reset" id="register" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Url.Action("Dashboard.", "Home", new { area = "" })">
+        Register
+    </a>
+
+    <a class="start-trail-btn btn focus-reset" id="login" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Action("Dashboard", "Home", new { area = "" })">
+        Login
+    </a>
 }
-</ul>

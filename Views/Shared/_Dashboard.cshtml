@@ -7,6 +7,7 @@
 	ApplicationUser btUser = await UserManager.GetUserAsync(User);
 	string imgSize = "40px";
 	string appName = "TicketFlux";
+	string? siteTitle = ViewData["Title"] as string;
 }
 
 <!DOCTYPE html>
@@ -14,7 +15,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>@ViewData["Title"] - @appName</title>
+	<title> - @appName</title>
 
 	<!-- Favicon -->
 	<link rel="icon" href="~/favicon.ico" />
@@ -207,7 +208,7 @@
 					    @*Divider*@
 						<div class="dropdown-divider"></div>
 
-						<div class="dropdown-item disabled font-weight-bold">TicketFlux</div>
+						<div class="dropdown-item disabled font-weight-bold">@appName</div>
 
 						@*Divider*@
 						<div class="dropdown-divider"></div>
@@ -242,7 +243,7 @@
 						</a>
 					</div>
 					<div class="info">
-						<a asp-area="" asp-controller="Companies" asp-action="Details" asp-route-id="@btUser?.CompanyId" class="d-block">Company Name</a>
+						<a asp-area="" asp-controller="Companies" asp-action="Details" asp-route-id="@btUser?.CompanyId" class="d-block">User Role</a>
 					</div>
 				</div>
 
@@ -260,11 +261,11 @@
 
 				<!-- Sidebar Menu -->
 				<nav class="mt-2">
-					<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+					<ul class="nav nav-pills nav-sidebar flex-column nav-compact nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
 
 						@*Dashboard Navigation*@
 						<li class="nav-item menu-open">
-							<a href="#" class="nav-link active">
+							<a href="#" class="nav-link @(siteTitle == "Dashboard" ? "active" : "" )">
 								<i class="nav-icon fas fa-tachometer-alt"></i>
 								<p>
 									Dashboard
@@ -273,13 +274,13 @@
 							</a>
 							<ul class="nav nav-treeview">
 								<li class="nav-item">
-									<a class="nav-link active" asp-area="" asp-controller="Home" asp-action="Dashboard">
+									<a class="nav-link @(siteTitle == "Dashboard" ? "active" : "" )" asp-area="" asp-controller="Home" asp-action="Dashboard">
 										<i class="far fa-circle nav-icon"></i>
 										<p>Overview</p>
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Dashboard">
+									<a class="nav-link @(siteTitle == "MyDashboard" ? "active" : "" )" asp-area="" asp-controller="Home" asp-action="Dashboard">
 										<i class="far fa-circle nav-icon"></i>
 										<p>My Dashboard</p>
 									</a>
@@ -287,9 +288,12 @@
 							</ul>
 						</li>
 
+						<!-- Spacer -->
+						<li class="nav-header">Actions</li>
+
 						@*Projects Navigation*@
 						<li class="nav-item">
-							<a href="#" class="nav-link">
+							<a href="#" class="nav-link @(siteTitle == "" ? "active" : "" )">
 								<i class="nav-icon fas fa-book"></i>
 								<p>
 									Projects
@@ -297,29 +301,29 @@
 								</p>
 							</a>
 							<ul class="nav nav-treeview">
+								@if (!User.IsInRole(nameof(Roles.Admin)))
+								{
+									@*All Projects*@
+									<li class="nav-item">
+										<a class="nav-link" asp-area="" asp-controller="Projects" asp-action="AllProjects">
+											<i class="fas fa-list-ul nav-icon"></i>
+											<p>All Projects</p>
+										</a>
+									</li>
+								}
+								<li class="nav-item">
+									@*My Projects*@								
+									<a class="nav-link" asp-area="" asp-controller="Projects" asp-action="MyProjects">
+										<i class="fas fa-tasks nav-icon"></i>
+										<p>My Projects</p>
+									</a>
+								</li>
 								@if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
 								{	@*New Project*@
 									<li class="nav-item">
 										<a class="nav-link" asp-area="" asp-controller="Projects" asp-action="Create">
-											<i class="far fa-circle nav-icon"></i>
+											<i class="far fa-edit nav-icon"></i>
 											<p>New Project...</p>
-										</a>
-									</li>
-								}
-								@*All Projects*@
-								<li class="nav-item">
-									<a class="nav-link" asp-area="" asp-controller="Projects" asp-action="AllProjects">
-										<i class="far fa-circle nav-icon"></i>
-										<p>All Projects</p>
-									</a>
-								</li>
-								@if (!User.IsInRole(nameof(Roles.Admin)))
-								{
-									@*My Projects*@
-									<li class="nav-item">
-										<a class="nav-link" asp-area="" asp-controller="Projects" asp-action="MyProjects">
-											<i class="far fa-circle nav-icon"></i>
-											<p>My Projects</p>
 										</a>
 									</li>
 								}
@@ -328,14 +332,14 @@
 									@*Archived Projects*@
 									<li class="nav-item">
 										<a class="nav-link" asp-area="" asp-controller="Projects" asp-action="ArchivedProjects">
-											<i class="far fa-circle nav-icon"></i>
+											<i class="fal fa-archive nav-icon"></i>
 											<p>Archived Projects</p>
 										</a>
 									</li>
 									@*Unassigned Projects*@
 									<li class="nav-item">
 										<a class="nav-link" asp-area="" asp-controller="Projects" asp-action="UnassignedProjects">
-											<i class="far fa-circle nav-icon"></i>
+											<i class="fas fa-question nav-icon"></i>
 											<p>Unassigned Projects</p>
 										</a>
 									</li>
@@ -356,7 +360,7 @@
 								@*New Ticket*@
 								<li class="nav-item">
 									<a class="nav-link" asp-area="" asp-controller="Tickets" asp-action="Create">
-										<i class="far fa-circle nav-icon"></i>
+										<i class="far fa-edit nav-icon"></i>
 										<p>New Ticket...</p>
 									</a>
 								</li>
@@ -365,7 +369,7 @@
 									@*All Tickets*@
 									<li class="nav-item">
 										<a class="nav-link" asp-area="" asp-controller="Tickets" asp-action="AllTickets">
-											<i class="far fa-circle nav-icon"></i>
+											<i class="fas fa-list-ul nav-icon"></i>
 											<p>All Tickets</p>
 										</a>
 									</li>
@@ -373,7 +377,7 @@
 								@*My Tickets*@
 								<li class="nav-item">
 									<a class="nav-link" asp-area="" asp-controller="Tickets" asp-action="MyTickets">
-										<i class="far fa-circle nav-icon"></i>
+										<i class="fas fa-tasks nav-icon"></i>
 										<p>My Tickets</p>
 									</a>
 								</li>
@@ -382,20 +386,64 @@
 									@*Archived Tickets*@
 									<li class="nav-item">
 										<a class="nav-link" asp-area="" asp-controller="Tickets" asp-action="ArchivedTickets">
-											<i class="far fa-circle nav-icon"></i>
+											<i class="fas fa-archive nav-icon"></i>
 											<p>Archived Tickets</p>
 										</a>
 									</li>
 									@*Unassigned Tickets*@
 									<li class="nav-item">
 										<a class="nav-link" asp-area="" asp-controller="Tickets" asp-action="UnassignedTickets">
-											<i class="far fa-circle nav-icon"></i>
+											<i class="fas fa-question nav-icon"></i>
 											<p>Unassigned Tickets</p>
 										</a>
 									</li>
 								}
 							</ul>
 						</li>
+
+						<!-- Team Navigation -->
+						<li class="nav-item">
+							<a href="#" class="nav-link">
+								<i class="nav-icon fas fa-users"></i>
+								<p>
+									Team
+									<i class="fas fa-angle-left right"></i>
+								</p>
+								<ul class="nav nav-treeview">
+									<li class="nav-item">
+										<a class="nav-link" asp-area="" asp-controller="" asp-action="">
+											<i class="fas fa-address-book nav-icon"></i>
+											<p>View Members</p>
+										</a>
+									</li>
+									@if(User.IsInRole(nameof(Roles.Admin)))
+									{
+										<li class="nav-item">										
+											<a class="nav-link" asp-area="" asp-controller="UserRoles" asp-action="ManageUserRoles">
+												<i class="fas fa-users-cog nav-icon"></i>
+												<p>Manage Members</p>
+											</a>
+										</li>
+										
+									}
+								</ul>
+							</a>
+						</li>
+
+						<!-- Spacer -->
+						<li class="nav-header">Extras</li>
+
+						<!-- Settings Navigation -->
+						<li class="nav-item">
+							<a href="#" class="nav-link">
+								<i class="nav-icon fas fa-cog"></i>
+								<p>
+									Settings
+								</p>
+							</a>
+						</li>
+
+
 					</ul>
 				</nav>
 				<!-- /.sidebar-menu -->
@@ -417,7 +465,7 @@
 		</div>
 		<!-- /.content-wrapper -->
 		<footer class="main-footer text-sm">
-			<strong>Copyright &copy; 2022 <a href="#">@appName</a>.</strong>
+			<strong>Copyright &copy; 2022 <a asp-area="" asp-controller="Home" asp-action="Index">@appName</a>.</strong>
 			All rights reserved.
 			<div class="float-right d-none d-sm-inline-block">
 				<b>Version</b> 0.9.3
@@ -441,7 +489,6 @@
 	</script>
 	<!-- Bootstrap 4 -->
 	<script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-	@*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>*@
 
 	<!-- ChartJS -->
 	<script src="~/plugins/chart.js/Chart.min.js"></script>
