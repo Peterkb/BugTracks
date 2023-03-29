@@ -55,8 +55,8 @@ public static class StartupConfig
 		builder.Services.AddAuthentication()
 			.AddGoogle(googleOptions =>
 			{
-				googleOptions.ClientId = configuration["Google:ClientId"];
-				googleOptions.ClientSecret = configuration["Google:ClientSecret"];
+				googleOptions.ClientId = configuration["Google:ClientId"] ?? Environment.GetEnvironmentVariable("GoogleClientId");
+				googleOptions.ClientSecret = configuration["Google:ClientSecret"] ?? Environment.GetEnvironmentVariable("GoogleClientId");
 			});
 
 		builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
