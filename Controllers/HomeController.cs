@@ -31,7 +31,22 @@ namespace BugTracksV3.Controllers
             return View();
         }
 
-        [Authorize]
+		public IActionResult Privacy()
+		{
+			return View();
+		}
+
+		public IActionResult Terms()
+		{
+			return View();
+		}
+
+		public IActionResult Contact()
+		{
+			return View();
+		}
+
+		[Authorize]
         public async Task<IActionResult> Dashboard()
         {
             DashboardViewModel model = new();
@@ -147,12 +162,7 @@ namespace BugTracksV3.Controllers
             return Json(plotlyData);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
