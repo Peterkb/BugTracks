@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace BugTracksV3.Models.ViewModels
+namespace BugTracksV3.Models.ViewModels;
+
+public class ProjectMembersViewModel
 {
-    public class ProjectMembersViewModel
-    {
-        public Project? Project { get; set; }
+    public Project? Project { get; set; }
 
-        public MultiSelectList? Users { get; set; }
+    public MultiSelectList? Users { get; set; }
 
-        public List<string>? SelectedUsers { get; set; }
-    }
+    public List<string>? SelectedUsers { get; set; }
 }

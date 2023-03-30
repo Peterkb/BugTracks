@@ -1,6 +1,10 @@
 ﻿@using BugTracksV3.Models.ViewModels;
 @model IEnumerable<ManageUserRolesViewModel>
 
+@{
+	ViewData["Title"] = "Manage Members";
+}
+
 <div class="row">
 	<h2 class="m-t-0 h3"><b>Manage Member Roles </b></h2>
 	@foreach (var member in Model)

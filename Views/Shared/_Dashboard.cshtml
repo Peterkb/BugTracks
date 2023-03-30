@@ -1,13 +1,17 @@
 ﻿@using BugTracksV3.Areas.Identity.Data
 @using BugTracksV3.Models.Enums
+@using BugTracksV3.Services.Interfaces;
 @using Microsoft.AspNetCore.Identity
 
 @inject UserManager<ApplicationUser> UserManager
+@inject IBTRolesService RolesService
 @{
 	ApplicationUser btUser = await UserManager.GetUserAsync(User);
 	string imgSize = "40px";
 	string appName = "TicketFlux";
+
 	string? siteTitle = ViewData["Title"] as string;
+	string? currentController = ViewContext.RouteData.Values["controller"]?.ToString();
 }
 
 <!DOCTYPE html>
@@ -15,7 +19,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title> - @appName</title>
+	<title> @siteTitle - @appName</title>
 
 	<!-- Favicon -->
 	<link rel="icon" href="~/favicon.ico" />
@@ -43,7 +47,8 @@
 	<!-- summernote -->
 	<link rel="stylesheet" href="~/plugins/summernote/summernote-bs4.min.css">
 	<!-- Site CSS -->
-	<link href="~/css/site.css" />
+	@*<link href="~/css/site.css" />*@
+	<link href="~/css/dashboard.css" />
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed dark-mode layout-footer-fixed">
@@ -221,7 +226,7 @@
 		<!-- Main Sidebar Container -->
 		<aside class="main-sidebar sidebar-dark-primary elevation-4">
 			<!-- Brand Logo -->
-			<a href="index3.html" class="brand-link">
+			<a asp-area="" asp-controller="Home" asp-action="Index" class="brand-link">
 				<img src="~/img/site/SiteLogo.svg" alt="@appName Logo" class="brand-image img-circle" style="opacity: .8">
 				<span class="brand-text fw-bold">@appName</span>
 			</a>
@@ -229,8 +234,9 @@
 			<!-- Sidebar -->
 			<div class="sidebar">
 				<!-- Sidebar user panel (optional) -->
+				<!-- Company & User Role Details -->
 				<div class="user-panel mt-3 pb-3 mb-3 d-flex">
-					<div class="image">
+					<div class="image d-flex align-items-center">
 						<a href="javascript:void(0);">
 							@if (btUser?.Company?.AvatarFileData != null)
 							{
@@ -242,8 +248,15 @@
 							}
 						</a>
 					</div>
-					<div class="info">
-						<a asp-area="" asp-controller="Companies" asp-action="Details" asp-route-id="@btUser?.CompanyId" class="d-block">User Role</a>
+					<div class="d-flex flex-column">
+						<!-- Company Name -->
+						<div class="info">
+							<a asp-area="" asp-controller="Companies" asp-action="Details" asp-route-id="@btUser?.CompanyId" class="d-block company disabled">@btUser?.Company?.Name</a>
+						</div>
+						<!-- User Role -->
+						<div class="info font-italic text-muted">
+							<p class="d-block disabled">@((await RolesService.GetUserRolesAsync(btUser)).FirstOrDefault())</p>
+						</div>
 					</div>
 				</div>
 
@@ -264,7 +277,7 @@
 					<ul class="nav nav-pills nav-sidebar flex-column nav-compact nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
 
 						@*Dashboard Navigation*@
-						<li class="nav-item menu-open">
+						<li class="nav-item @(currentController == "Home" ? "menu-open" : "" )">
 							<a href="#" class="nav-link @(siteTitle == "Dashboard" ? "active" : "" )">
 								<i class="nav-icon fas fa-tachometer-alt"></i>
 								<p>
@@ -292,8 +305,8 @@
 						<li class="nav-header">Actions</li>
 
 						@*Projects Navigation*@
-						<li class="nav-item">
-							<a href="#" class="nav-link @(siteTitle == "" ? "active" : "" )">
+						<li class="nav-item @(currentController == "Projects" ? "active" : "" )">
+							<a href="#" class="nav-link @(currentController == "Projects" ? "active" : "" )">
 								<i class="nav-icon fas fa-book"></i>
 								<p>
 									Projects
@@ -301,44 +314,44 @@
 								</p>
 							</a>
 							<ul class="nav nav-treeview">
-								@if (!User.IsInRole(nameof(Roles.Admin)))
-								{
-									@*All Projects*@
-									<li class="nav-item">
-										<a class="nav-link" asp-area="" asp-controller="Projects" asp-action="AllProjects">
-											<i class="fas fa-list-ul nav-icon"></i>
-											<p>All Projects</p>
-										</a>
-									</li>
-								}
-								<li class="nav-item">
-									@*My Projects*@								
-									<a class="nav-link" asp-area="" asp-controller="Projects" asp-action="MyProjects">
-										<i class="fas fa-tasks nav-icon"></i>
-										<p>My Projects</p>
-									</a>
-								</li>
 								@if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
 								{	@*New Project*@
 									<li class="nav-item">
-										<a class="nav-link" asp-area="" asp-controller="Projects" asp-action="Create">
+										<a class="nav-link @(siteTitle == "New Project" ? "active" : "" )" asp-area="" asp-controller="Projects" asp-action="Create">
 											<i class="far fa-edit nav-icon"></i>
 											<p>New Project...</p>
 										</a>
 									</li>
 								}
+								@if (!User.IsInRole(nameof(Roles.Admin)))
+								{
+									@*All Projects*@
+									<li class="nav-item">
+										<a class="nav-link @(siteTitle == "All Projects" ? "active" : "" )" asp-area="" asp-controller="Projects" asp-action="AllProjects">
+											<i class="fas fa-list-ul nav-icon"></i>
+											<p>All Projects</p>
+										</a>
+									</li>
+								}
+								<li class="nav-item active">
+									@*My Projects*@								
+									<a class="nav-link @(siteTitle == "My Projects" ? "active" : "" )" asp-area="" asp-controller="Projects" asp-action="MyProjects">
+										<i class="fas fa-tasks nav-icon"></i>
+										<p>My Projects</p>
+									</a>
+								</li>
 								@if (User.IsInRole(nameof(Roles.Admin)))
 								{
 									@*Archived Projects*@
 									<li class="nav-item">
-										<a class="nav-link" asp-area="" asp-controller="Projects" asp-action="ArchivedProjects">
-											<i class="fal fa-archive nav-icon"></i>
+										<a class="nav-link @(siteTitle == "Archived Projects" ? "active" : "" )" asp-area="" asp-controller="Projects" asp-action="ArchivedProjects">
+											<i class="fas fa-archive nav-icon"></i>
 											<p>Archived Projects</p>
 										</a>
 									</li>
 									@*Unassigned Projects*@
 									<li class="nav-item">
-										<a class="nav-link" asp-area="" asp-controller="Projects" asp-action="UnassignedProjects">
+										<a class="nav-link @(siteTitle == "Unassigned Projects" ? "active" : "" )" asp-area="" asp-controller="Projects" asp-action="UnassignedProjects">
 											<i class="fas fa-question nav-icon"></i>
 											<p>Unassigned Projects</p>
 										</a>
@@ -348,7 +361,7 @@
 						</li>
 
 						@*Tickets Navigation*@
-						<li class="nav-item">
+						<li class="nav-item @(currentController == "Tickets" ? " menu-open" : "")">
 							<a href="#" class="nav-link">
 								<i class="nav-icon fas fa-copy"></i>
 								<p>
@@ -359,7 +372,7 @@
 							<ul class="nav nav-treeview">
 								@*New Ticket*@
 								<li class="nav-item">
-									<a class="nav-link" asp-area="" asp-controller="Tickets" asp-action="Create">
+									<a class="nav-link @(siteTitle == "New Ticket" ? "active" : "")" asp-area="" asp-controller="Tickets" asp-action="Create">
 										<i class="far fa-edit nav-icon"></i>
 										<p>New Ticket...</p>
 									</a>
@@ -368,7 +381,7 @@
 								{
 									@*All Tickets*@
 									<li class="nav-item">
-										<a class="nav-link" asp-area="" asp-controller="Tickets" asp-action="AllTickets">
+										<a class="nav-link @(siteTitle == "All Tickets" ? "active" : "")" asp-area="" asp-controller="Tickets" asp-action="AllTickets">
 											<i class="fas fa-list-ul nav-icon"></i>
 											<p>All Tickets</p>
 										</a>
@@ -376,7 +389,7 @@
 								}
 								@*My Tickets*@
 								<li class="nav-item">
-									<a class="nav-link" asp-area="" asp-controller="Tickets" asp-action="MyTickets">
+									<a class="nav-link @(siteTitle == "My Tickets" ? "active" : "")" asp-area="" asp-controller="Tickets" asp-action="MyTickets">
 										<i class="fas fa-tasks nav-icon"></i>
 										<p>My Tickets</p>
 									</a>
@@ -385,14 +398,14 @@
 								{
 									@*Archived Tickets*@
 									<li class="nav-item">
-										<a class="nav-link" asp-area="" asp-controller="Tickets" asp-action="ArchivedTickets">
+										<a class="nav-link @(siteTitle == "Archived Tickets" ? "active" : "")" asp-area="" asp-controller="Tickets" asp-action="ArchivedTickets">
 											<i class="fas fa-archive nav-icon"></i>
 											<p>Archived Tickets</p>
 										</a>
 									</li>
 									@*Unassigned Tickets*@
 									<li class="nav-item">
-										<a class="nav-link" asp-area="" asp-controller="Tickets" asp-action="UnassignedTickets">
+										<a class="nav-link @(siteTitle == "Unassigned Tickets" ? "active" : "")" asp-area="" asp-controller="Tickets" asp-action="UnassignedTickets">
 											<i class="fas fa-question nav-icon"></i>
 											<p>Unassigned Tickets</p>
 										</a>
@@ -403,31 +416,31 @@
 
 						<!-- Team Navigation -->
 						<li class="nav-item">
-							<a href="#" class="nav-link">
+							<a href="#" class="nav-link @(currentController == "UserRoles")">
 								<i class="nav-icon fas fa-users"></i>
 								<p>
 									Team
 									<i class="fas fa-angle-left right"></i>
 								</p>
-								<ul class="nav nav-treeview">
-									<li class="nav-item">
-										<a class="nav-link" asp-area="" asp-controller="" asp-action="">
-											<i class="fas fa-address-book nav-icon"></i>
-											<p>View Members</p>
+							</a>
+							<ul class="nav nav-treeview">
+								<li class="nav-item">
+									<a class="nav-link @(siteTitle == "Members" ? "active" : "")" asp-area="" asp-controller="" asp-action="">
+										<i class="fas fa-address-book nav-icon"></i>
+										<p>View Members</p>
+									</a>
+								</li>
+								@if(User.IsInRole(nameof(Roles.Admin)))
+								{
+									<li class="nav-item">										
+										<a class="nav-link @(siteTitle == "Manage Members" ? "active" : "")" asp-area="" asp-controller="UserRoles" asp-action="ManageUserRoles">
+											<i class="fas fa-users-cog nav-icon"></i>
+											<p>Manage Members</p>
 										</a>
 									</li>
-									@if(User.IsInRole(nameof(Roles.Admin)))
-									{
-										<li class="nav-item">										
-											<a class="nav-link" asp-area="" asp-controller="UserRoles" asp-action="ManageUserRoles">
-												<i class="fas fa-users-cog nav-icon"></i>
-												<p>Manage Members</p>
-											</a>
-										</li>
 										
-									}
-								</ul>
-							</a>
+								}
+							</ul>
 						</li>
 
 						<!-- Spacer -->

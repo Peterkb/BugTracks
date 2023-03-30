@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace BugTracksV3.Models.ViewModels
+namespace BugTracksV3.Models.ViewModels;
+
+public class AssignDeveloperViewModel
 {
-    public class AssignDeveloperViewModel
-    {
-        public Ticket? Ticket { get; set; }
+    public Ticket? Ticket { get; set; }
 
-        public SelectList? Developers { get; set; }
+    public SelectList? Developers { get; set; }
 
-        public string DeveloperId { get; set; } = string.Empty;
-    }
+    public string DeveloperId { get; set; } = string.Empty;
 }
