@@ -1,1 +1,12 @@
-﻿.company
+﻿.description {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 150px; /* adjust to the desired length */
+}
+
+
+/*Icons*/
+.i-gap {
+    gap: 0.5rem
+}

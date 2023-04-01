@@ -13,6 +13,7 @@
 	ViewData["Title"] = "Dashboard";
 	//ApplicationUser btUser = await UserManager.GetUserAsync(User);
 	//string imgSize = "50px";
+	Random dice = new();
 }
 
 <!-- Styles -->
@@ -28,7 +29,7 @@
 	}
 </style>
 
-<!-- Content Header (Page header) -->
+<!-- DashBoard Header-->
 <div class="content-header">
 	<div class="container-fluid">
 		<div class="row mb-2">
@@ -44,30 +45,38 @@
 		</div>
 	</div>
 </div>
-<section class="content">
+
+<!-- Dashboard -->
+<div class="content">
 	<div class="container-fluid">
+
+		<!-- Banners -->
 		<div class="row">
-			@*Projects*@
+
+			<!-- Projects -->
 			<div class="col-lg-3 col-6">
 				<div class="small-box bg-info">
 					<div class="inner">
 						<h3>@Model.Projects.Where(p => p.StartDate < DateTime.Now && p.EndDate > DateTime.Now).Count()</h3>
 						<p>Active Projects</p>
+
 						<div class="icon">
 							<i class="fas fa-book"></i>							
 						</div>
-						@if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
-						{
-							<a asp-action="AllProjects" asp-controller="Projects" class="small-box-footer">All Projects<i class="ml-2 fas fa-arrow-circle-right"></i></a>
-						}
-						else
-						{
-							<a asp-action="MyProjects" asp-controller="Projects" class="small-box-footer">My Projects<i class="ml-2 fas fa-arrow-circle-right"></i></a>
-						}
-					</div>
+					</div>					
+
+					@if (User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+					{
+						<a asp-action="AllProjects" asp-controller="Projects" class="small-box-footer">All Projects<i class="ml-2 fas fa-arrow-circle-right"></i></a>
+					}
+					else
+					{
+						<a asp-action="MyProjects" asp-controller="Projects" class="small-box-footer">My Projects<i class="ml-2 fas fa-arrow-circle-right"></i></a>
+					}
 				</div>
 			</div>
-			@*Tickets*@
+
+			<!-- Tickets -->
 			<div class="col-lg-3 col-6">
 				<div class="small-box bg-success">
 					<div class="inner">
@@ -76,11 +85,12 @@
 						<div class="icon">
 							<i class="fas fa-copy"></i>
 						</div>
-						<a asp-action="AllTickets" asp-controller="Tickets" class="small-box-footer">All Tickets<i class="ml-2 fas fa-arrow-circle-right"></i></a>
 					</div>
+					<a asp-action="AllTickets" asp-controller="Tickets" class="small-box-footer">All Tickets<i class="ml-2 fas fa-arrow-circle-right"></i></a>
 				</div>
 			</div>
-			@*Unassigned Tickets*@
+
+			<!-- Unassigned Tickets -->
 			<div class="col-lg-3 col-6">
 				<div class="small-box bg-warning">
 					<div class="inner">
@@ -89,11 +99,12 @@
 						<div class="icon">
 							<i class="ion ion-pie-graph"></i>
 						</div>
-						<a asp-action="AllTickets" asp-controller="Tickets" class="small-box-footer">All Unassigned Tickets<i class="ml-2 fas fa-arrow-circle-right"></i></a>
 					</div>
+					<a asp-action="AllTickets" asp-controller="Tickets" class="small-box-footer">All Unassigned Tickets<i class="ml-2 fas fa-arrow-circle-right"></i></a>
 				</div>
 			</div>
-			@*Total Members*@
+
+			<!-- Members -->
 			<div class="col-lg-3 col-6">
 				<div class="small-box bg-danger">
 					<div class="inner">
@@ -102,13 +113,242 @@
 						<div class="icon">
 							<i class="ion ion-person-add"></i>
 						</div>
-						<a asp-action="" asp-controller="" class="small-box-footer">All Members<i class="fas fa-arrow-circle-right"></i></a>
 					</div>
+					<a asp-action="" asp-controller="" class="small-box-footer">All Members<i class="ml-2 fas fa-arrow-circle-right"></i></a>
 				</div>
 			</div>
+
+
 		</div>
 	</div>
-</section>
+
+		<!-- Information -->
+		<div class="row">
+
+			<section class="col-lg-7 connectedSortable ui-sortable">
+				<!-- Card Header -->
+
+				<!-- PROJECTS -->
+				<div class="card" id="Projects">
+					<div class="card-header ui-sortable-handle border-transparent" style="cursor: move;">
+						<h3 class="card-title">
+							<i class="fas fa-chart-pie mr-1"></i>
+							Projects
+						</h3>
+						<!-- Card Tools -->
+						<div class="card-tools">
+							<button class="btn btn-tool" type="button" data-card-widget="collapse">
+								<i class="fas fa-minus"></i>
+							</button>
+						</div>				
+					</div>
+					<!-- Card Body -->
+					<div class="card-body p-0">
+						<div class="table-responsive">
+							<table class="table m-0">
+								<thead>
+									<tr>
+										<th>Project</th>
+										<th>Description</th>
+										<th>Members</th>
+										<th>Progress</th>
+										<th class="text-center">Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+								<tbody>
+									@foreach (var project in Model.Projects.OrderByDescending(d => d.EndDate))
+									{
+									<tr>
+										<!-- Name -->
+										<td>@project.Name</td>
+
+										<!-- Description -->
+										<td>
+											<div class="description">
+												@project.Description
+											</div>
+										</td>
+
+										<!-- Members -->
+										<td>Members</td>
+
+										<!-- Progress -->
+										<td class="">
+											<div class="progress progress-sm">
+												<div class="progress-bar bg-success" style="width: @dice.Next(1, 100)%;"></div>
+											</div>
+										</td>
+
+										<!-- Actions -->
+										<td class="d-flex justify-content-center i-gap">
+											<a asp-action="Edit" asp-controller="Projects" asp-route-id="@project.Id">
+												<i class="far fa-edit text-info"></i>
+											</a>
+											<a asp-action="Details" asp-controller="Projects" asp-route-id="@project.Id">
+												<i class="fas fa-folder-open text-success"></i>
+											</a>
+											<a asp-action="Archive" asp-controller="Projects">
+												<i class="fas fa-archive text-warning"></i>
+											</a>
+										</td>
+									</tr>
+								}
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- Card Footer -->
+					<div class="card-footer clearfix">
+						<a asp-controller="Projects" asp-action="Create" class="btn btn-sm btn-info float-left">Create New Project</a>
+						@if(User.IsInRole(nameof(Roles.Admin)))
+						{
+						<a asp-area="" asp-action="AllProjects" asp-controller="Projects" class="btn btn-sm btn-secondary float-right">View All Projects</a>
+						}
+						else
+						{
+							<a asp-area="" asp-action="MyProjects" asp-controller="Projects" class="btn btn-sm btn-secondary float-right">View My Projects</a>
+						}
+					</div>
+				</div>
+
+				<!-- Tickets -->
+				<div class="card" id="Projects">
+					<div class="card-header ui-sortable-handle border-transparent" style="cursor: move;">
+						<h3 class="card-title">
+							<i class="fas fa-copy mr-1"></i>
+							Tickets
+						</h3>
+						<!-- Card Tools -->
+						<div class="card-tools">
+							<button class="btn btn-tool" type="button" data-card-widget="collapse">
+								<i class="fas fa-minus"></i>
+							</button>
+						</div>				
+					</div>
+					<!-- Card Body -->
+					<div class="card-body p-0">
+						<div class="table-responsive">
+							<table class="table m-0">
+								<thead>
+									<tr>
+										<th>Ticket</th>
+										<th>Description</th>
+										<th>Developer</th>
+										<th>Status</th>
+										<th class="text-center">Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+								<tbody>
+									@foreach (var ticket in Model.Tickets.OrderByDescending(d => d.DateCreated))
+									{
+									<tr>
+										<!-- Name -->
+										<td>Name</td>
+
+										<!-- Description -->
+										<td>
+											<div class="description">
+												@ticket.Description
+											</div>
+										</td>
+
+										<!-- Members -->
+										<td>Members</td>
+
+										<!-- Status -->
+										<td class="">
+											<span class="badge badge-success">Shipped</span>
+										</td>
+
+										<!-- Actions -->
+										<td class="d-flex justify-content-center i-gap">
+											<a asp-action="Edit" asp-controller="Projects" asp-route-id="@ticket.Id">
+												<i class="far fa-edit text-info"></i>
+											</a>
+											<a asp-action="Details" asp-controller="Projects" asp-route-id="@ticket.Id">
+												<i class="fas fa-folder-open text-success"></i>
+											</a>
+											<a asp-action="Archive" asp-controller="Projects">
+												<i class="fas fa-archive text-warning"></i>
+											</a>
+										</td>
+									</tr>
+								}
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- Card Footer -->
+					<div class="card-footer clearfix">
+						<a asp-controller="Projects" asp-action="Create" class="btn btn-sm btn-info float-left">Create New Project</a>
+						@if(User.IsInRole(nameof(Roles.Admin)))
+						{
+						<a asp-area="" asp-action="AllProjects" asp-controller="Projects" class="btn btn-sm btn-secondary float-right">View All Projects</a>
+						}
+						else
+						{
+							<a asp-area="" asp-action="MyProjects" asp-controller="Projects" class="btn btn-sm btn-secondary float-right">View My Projects</a>
+						}
+					</div>
+				</div>
+			</section>
+
+			<section class="col-lg-5 connectedSortable ui-sortable">
+
+				<!-- MEMBERS -->
+				<div class="card" id="Members">
+					<!-- Header -->
+					<div class="card-header ui-sortable-handle" style="cursor: move;">
+						<h3 class="card-title">
+							<i class="fas fa-users mr-1"></i>
+							Members
+						</h3>
+
+						<div class="card-tools">
+							<button class="btn btn-tool" type="button" data-card-widget="collapse">
+								<i class="fas fa-minus"></i>
+							</button>
+						</div>
+					</div>
+
+					<!-- Body -->
+					<div class="card-body p-0">
+						<ul class="users-list">
+							@for (int i = 0; i < 8; i++)
+						{
+							<li class="d-flex flex-column align-content-center flex-wrap">
+								<img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" alt="User Image" class="media-object img-fluid rounded-circle" style="width: 128px; height: 128px" />
+								<div>
+									Name
+								</div>
+							</li>
+						}
+						</ul>
+					</div>
+
+					<!-- Footer -->
+					@if(User.IsInRole(nameof(Roles.Admin)) || User.IsInRole(nameof(Roles.ProjectManager)))
+					{
+					<div class="card-footer">
+						<a asp-area="" asp-action="" asp-controller="" class="btn btn-sm btn-primary float-left">Invite Member</a>
+
+						
+						<a asp-area="" asp-action="" asp-controller="" class="btn btn-sm btn-secondary float-right">View All Members</a>
+					</div>	
+					}
+					else
+					{
+					<div class="card-footer text-center">
+						<a asp-area="" asp-action="" asp-controller="">View All Members</a>
+					</div>
+					}
+				</div>
+
+			</section>
+		</div>
+</div>
 
 <div>
 	<div classxfont-weighteighteightgetainer-fluid">
