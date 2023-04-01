@@ -125,12 +125,12 @@
 		<!-- Information -->
 		<div class="row">
 
-			<section class="col-lg-7 connectedSortable ui-sortable">
+			<section class="col-lg-7 connectedSortable">
 				<!-- Card Header -->
 
 				<!-- PROJECTS -->
 				<div class="card" id="Projects">
-					<div class="card-header ui-sortable-handle border-transparent" style="cursor: move;">
+					<div class="card-header border-transparent">
 						<h3 class="card-title">
 							<i class="fas fa-chart-pie mr-1"></i>
 							Projects
@@ -181,16 +181,18 @@
 										</td>
 
 										<!-- Actions -->
-										<td class="d-flex justify-content-center i-gap">
-											<a asp-action="Edit" asp-controller="Projects" asp-route-id="@project.Id">
-												<i class="far fa-edit text-info"></i>
-											</a>
-											<a asp-action="Details" asp-controller="Projects" asp-route-id="@project.Id">
-												<i class="fas fa-folder-open text-success"></i>
-											</a>
-											<a asp-action="Archive" asp-controller="Projects">
-												<i class="fas fa-archive text-warning"></i>
-											</a>
+										<td>
+											<div class="d-flex justify-content-center i-gap">
+												<a asp-action="Edit" asp-controller="Projects" asp-route-id="@project.Id">
+													<i class="far fa-edit text-info"></i>
+												</a>
+												<a asp-action="Details" asp-controller="Projects" asp-route-id="@project.Id">
+													<i class="fas fa-folder-open text-success"></i>
+												</a>
+												<a asp-action="Archive" asp-controller="Projects">
+													<i class="fas fa-archive text-warning"></i>
+												</a>
+											</div>
 										</td>
 									</tr>
 								}
@@ -213,8 +215,8 @@
 				</div>
 
 				<!-- Tickets -->
-				<div class="card" id="Projects">
-					<div class="card-header ui-sortable-handle border-transparent" style="cursor: move;">
+				<div class="card" id="Tickets">
+					<div class="card-header border-transparent">
 						<h3 class="card-title">
 							<i class="fas fa-copy mr-1"></i>
 							Tickets
@@ -233,49 +235,75 @@
 								<thead>
 									<tr>
 										<th>Ticket</th>
-										<th>Description</th>
-										<th>Developer</th>
-										<th>Status</th>
+										<th class="text-center">Developer</th>
+										<th class="text-center">Status</th>
+										<th>Priority</th>
 										<th class="text-center">Actions</th>
 									</tr>
 								</thead>
-								<tbody>
+
 								<tbody>
 									@foreach (var ticket in Model.Tickets.OrderByDescending(d => d.DateCreated))
 									{
 									<tr>
 										<!-- Name -->
-										<td>Name</td>
+										<td>@ticket.Title</td>
 
-										<!-- Description -->
+										<!-- Members -->
 										<td>
-											<div class="description">
-												@ticket.Description
+											<div class="d-flex justify-content-center">
+												<img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" alt="User Image" class="media-object rounded-circle" style="width: 40px;" />
 											</div>
 										</td>
 
-										<!-- Members -->
-										<td>Members</td>
-
 										<!-- Status -->
-										<td class="">
-											<span class="badge badge-success">Shipped</span>
+										<td class="text-center">
+											@if (ticket.TicketStatus.Name == "New")
+											{
+												<span class="badge badge-success">@ticket.TicketStatus.Name</span>
+											}
+											else
+											{
+												<span class="badge text-secondary">@ticket.TicketStatus.Name</span>
+											}
+										</td>
+
+										<!-- Priority -->
+										<td class="text-center">
+											@if (ticket.TicketPriority.Name == "Low")
+											{
+												<span class="badge text-secondary">@ticket.TicketPriority.Name</span>
+											}
+											else if (ticket.TicketPriority.Name == "Medium")
+											{
+												<span class="badge badge-primary">@ticket.TicketPriority.Name</span>
+											}
+											else if (ticket.TicketPriority.Name == "High")
+											{
+												<span class="badge badge-warning">@ticket.TicketPriority.Name</span>
+											}
+											else if (ticket.TicketPriority.Name == "Urgent")
+											{
+												<span class="badge badge-danger">@ticket.TicketPriority.Name</span>
+											}
 										</td>
 
 										<!-- Actions -->
-										<td class="d-flex justify-content-center i-gap">
-											<a asp-action="Edit" asp-controller="Projects" asp-route-id="@ticket.Id">
-												<i class="far fa-edit text-info"></i>
-											</a>
-											<a asp-action="Details" asp-controller="Projects" asp-route-id="@ticket.Id">
-												<i class="fas fa-folder-open text-success"></i>
-											</a>
-											<a asp-action="Archive" asp-controller="Projects">
-												<i class="fas fa-archive text-warning"></i>
-											</a>
+										<td>
+											<div class="d-flex justify-content-center i-gap">
+												<a asp-action="Edit" asp-controller="Projects" asp-route-id="@ticket.Id">
+													<i class="far fa-edit text-info"></i>
+												</a>
+												<a asp-action="Details" asp-controller="Projects" asp-route-id="@ticket.Id">
+													<i class="fas fa-folder-open text-success"></i>
+												</a>
+												<a asp-action="Archive" asp-controller="Projects">
+													<i class="fas fa-archive text-warning"></i>
+												</a>
+											</div>
 										</td>
 									</tr>
-								}
+									}
 								</tbody>
 							</table>
 						</div>
@@ -285,22 +313,22 @@
 						<a asp-controller="Projects" asp-action="Create" class="btn btn-sm btn-info float-left">Create New Project</a>
 						@if(User.IsInRole(nameof(Roles.Admin)))
 						{
-						<a asp-area="" asp-action="AllProjects" asp-controller="Projects" class="btn btn-sm btn-secondary float-right">View All Projects</a>
+						<a asp-area="" asp-action="AllProjects" asp-controller="Projects" class="btn btn-sm btn-secondary float-right">View All Tickets</a>
 						}
 						else
 						{
-							<a asp-area="" asp-action="MyProjects" asp-controller="Projects" class="btn btn-sm btn-secondary float-right">View My Projects</a>
+							<a asp-area="" asp-action="MyProjects" asp-controller="Projects" class="btn btn-sm btn-secondary float-right">View My Tickets</a>
 						}
 					</div>
 				</div>
 			</section>
 
-			<section class="col-lg-5 connectedSortable ui-sortable">
+			<section class="col-lg-5 connectedSortable">
 
 				<!-- MEMBERS -->
 				<div class="card" id="Members">
 					<!-- Header -->
-					<div class="card-header ui-sortable-handle" style="cursor: move;">
+					<div class="card-header">
 						<h3 class="card-title">
 							<i class="fas fa-users mr-1"></i>
 							Members
@@ -316,12 +344,15 @@
 					<!-- Body -->
 					<div class="card-body p-0">
 						<ul class="users-list">
-							@for (int i = 0; i < 8; i++)
+						@foreach (ApplicationUser member in Model.Members)
 						{
 							<li class="d-flex flex-column align-content-center flex-wrap">
-								<img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" alt="User Image" class="media-object img-fluid rounded-circle" style="width: 128px; height: 128px" />
+								<img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" alt="User Image" class="media-object rounded-circle" style="width: 128px;" />
 								<div>
-									Name
+									@((await RolesService.GetUserRolesAsync(member)).FirstOrDefault())
+								</div>
+								<div>
+									@member.FirstName
 								</div>
 							</li>
 						}
@@ -524,28 +555,6 @@
 						</div>
 					</div>
 					<div class="card-footer">
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Members -->
-		<div class="col-md-2 ">
-			<div class="bg-dark">
-				<div class="card m-1 p-2">
-					<div class="card-header">
-						<h2>Members</h2>
-						<hr />
-					</div>
-					<div class="card-body" style="overflow-y:auto;height:600px;background-color:#59462d">
-						@foreach (ApplicationUser member in Model.Members)
-						{
-							<div class="">
-								<span style="font-weight:bold">@member.FullName</span>
-								<h6>@((await RolesService.GetUserRolesAsync(member)).FirstOrDefault())</h6>
-							</div>
-							<hr />
-						}
 					</div>
 				</div>
 			</div>
