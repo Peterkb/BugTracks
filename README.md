@@ -4,7 +4,7 @@
 
 **Preview on [TicketFlux](https://ticketflux-prod.up.railway.app/)**
 
-!["AdminLTE Presentation"](https://adminlte.io/AdminLTE3.png "AdminLTE Presentation")
+[![Dashboard.png](https://i.postimg.cc/zvgM5D9R/Dashboard.png)](https://postimg.cc/K3mQDbcZ)
 
 **TicketFlux** has been carefully coded with clear comments in all of its C#, CSS and HTML files.
 
@@ -54,3 +54,4 @@ I reserve the right to change the license of future releases.
 ## Image Credits
 
 - [Pixeden](http://www.pixeden.com/psd-web-elements/flat-responsive-showcase-psd)
+- [Randomuser](https://randomuser.me/photos)

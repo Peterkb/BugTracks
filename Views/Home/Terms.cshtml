@@ -1,6 +1,14 @@
 ﻿@{
+	Layout = "_Layout";
 	ViewData["Title"] = "Terms & Conditions";
 }
 
-<h1>Terms & Conditions Page</h1>
-<p>This page will be coming soon</p>
+<h5 style="text-align:center;">Terms & Conditions</h5>
+<h1 style="text-align:center;">Coming Soon!</h1>
+<p style="text-align:center;">You will be redirected in 5 seconds</p>
+
+<script>
+    setTimeout(function () {
+        window.location.href = '@Url.Action("Index", "Home")';
+    }, 5000);
+</script>

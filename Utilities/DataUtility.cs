@@ -11,7 +11,6 @@ public class DataUtility
 	//Connection String Builder
 	public static string GetConnectionString(IConfiguration configuration)
 	{
-		// Unhandled exception. System.ArgumentNullException: Value cannot be null. (Parameter 'connectionString')
 		var connectionString = configuration.GetSection("pgSettings")["pgConnection"];
 		var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
@@ -71,6 +70,7 @@ public class DataUtility
 	public static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
 	{
 		//Seed Roles
+		await roleManager.CreateAsync(new IdentityRole(Roles.SuperUser.ToString()));
 		await roleManager.CreateAsync(new IdentityRole(Roles.Admin.ToString()));
 		await roleManager.CreateAsync(new IdentityRole(Roles.ProjectManager.ToString()));
 		await roleManager.CreateAsync(new IdentityRole(Roles.Developer.ToString()));
@@ -300,8 +300,8 @@ public class DataUtility
 				 new Project()
 				 {
 					 CompanyId = company1Id,
-					 Name = "Build a Personal Porfolio",
-					 Description="Single page html, css & javascript page.  Serves as a landing page for candidates and contains a bio and links to all applications and challenges." ,
+					 Name = "Personal Porfolio",
+					 Description="React Website using React Three fiber. Serves as a landing page for my personal portfolio." ,
 					 StartDate = new DateTime(2021,8,20),
 					 EndDate = new DateTime(2021,8,20).AddMonths(1),
 					 ProjectPriorityId = priorityLow
@@ -309,8 +309,8 @@ public class DataUtility
 				 new Project()
 				 {
 					 CompanyId = company1Id,
-					 Name = "Build a supplemental Blog Web Application",
-					 Description="Candidate's custom built web application using .Net Core with MVC, a postgres database and hosted in a heroku container.  The app is designed for the candidate to create, update and maintain a live blog site.",
+					 Name = "Blog Drops",
+					 Description="My custom built web application using .Net Core with MVC, a postgres database and hosted in a railway container.  Made to create, update and maintain a live blog site.",
 					 StartDate = new DateTime(2021,8,20),
 					 EndDate = new DateTime(2021,8,20).AddMonths(4),
 					 ProjectPriorityId = priorityMedium
@@ -318,8 +318,8 @@ public class DataUtility
 				 new Project()
 				 {
 					 CompanyId = company1Id,
-					 Name = "Build an Issue Tracking Web Application",
-					 Description="A custom designed .Net Core application with postgres database.  The application is a Multi-tenant application designed to track issue tickets' progress.  Implemented with identity and user roles, Tickets are maintained in projects which are maintained by users in the role of projectmanager.  Each project has a team and team members.",
+					 Name = "TicketFlux",
+					 Description="A custom designed .Net Core application with postgres database. The application is a Multi-tenant application designed to track issue tickets' progress.  Implemented with identity and user roles, Tickets are maintained in projects which are maintained by users in the role of projectmanager.  Each project has a team and team members.",
 					 StartDate = new DateTime(2021,8,20),
 					 EndDate = new DateTime(2021,8,20).AddMonths(6),
 					 ProjectPriorityId = priorityHigh
@@ -327,20 +327,20 @@ public class DataUtility
 				 new Project()
 				 {
 					 CompanyId = company1Id,
-					 Name = "Build an Address Book Web Application",
-					 Description="A custom designed .Net Core application with postgres database.  This is an application to serve as a rolodex of contacts for a given user..",
+					 Name = "Contact Crate",
+					 Description="A custom designed .Net Core application with postgres database.  This is an application to serve as a rolodex of contacts for a given user.",
 					 StartDate = new DateTime(2021,8,20),
 					 EndDate = new DateTime(2021,8,20).AddMonths(2),
-					 ProjectPriorityId = priorityLow
+					 ProjectPriorityId = priorityMedium
 				 },
 				new Project()
 				 {
 					 CompanyId = company1Id,
-					 Name = "Build a Movie Information Web Application",
+					 Name = "Movie Pro",
 					 Description="A custom designed .Net Core application with postgres database.  An API based application allows users to input and import movie posters and details including cast and crew information.",
 					 StartDate = new DateTime(2021,8,20),
 					 EndDate = new DateTime(2021,8,20).AddMonths(3),
-					 ProjectPriorityId = priorityHigh
+					 ProjectPriorityId = priorityLow
 				 }
 			};
 
@@ -399,7 +399,7 @@ public class DataUtility
 				new TicketStatus() { Name = BTTicketStatus.New.ToString() },                 // Newly Created ticket having never been assigned
 				new TicketStatus() { Name = BTTicketStatus.Development.ToString() },         // Ticket is assigned and currently being worked 
 				new TicketStatus() { Name = BTTicketStatus.Testing.ToString()  },            // Ticket is assigned and is currently being tested
-				new TicketStatus() { Name = BTTicketStatus.Resolved.ToString()  },           // Ticket remains assigned to the developer but work in now complete
+				new TicketStatus() { Name = BTTicketStatus.Resolved.ToString()  },           // Ticket remains assigned to the developer but work is now complete
 			};
 
 			var dbTicketStatuses = context.TicketStatuses.Select(c => c.Name).ToList();

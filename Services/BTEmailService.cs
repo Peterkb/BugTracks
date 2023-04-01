@@ -5,50 +5,53 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using MimeKit;
 
-namespace BugTracksV3.Services
+namespace BugTracksV3.Services;
+
+public class BTEmailService : IEmailSender
 {
-	public class BTEmailService : IEmailSender
+	private readonly MailSettings _mailSettings;
+
+	public BTEmailService(IOptions<MailSettings> mailSettings)
 	{
-		//TODO: Set up email for RAILWAY!!
-		private readonly MailSettings _mailSettings;
+		_mailSettings = mailSettings.Value;
+		MailSettings = mailSettings; // resolves error CS8618
+	}
 
-		public BTEmailService(IOptions<MailSettings> mailSettings)
+	public IOptions<MailSettings> MailSettings { get; }
+
+	public async Task SendEmailAsync(string emailTo, string subject, string htmlMessage)
+	{
+		MimeMessage email = new();
+
+		email.Sender = MailboxAddress.Parse(_mailSettings.Email ?? Environment.GetEnvironmentVariable("Email"));
+		email.To.Add(MailboxAddress.Parse(emailTo));
+		email.Subject = subject;
+
+		var builder = new BodyBuilder
 		{
-			_mailSettings = mailSettings.Value;
+			HtmlBody = htmlMessage
+		};
+
+		email.Body = builder.ToMessageBody();
+
+		try
+		{
+			using var smtp = new SmtpClient();
+
+			var host = _mailSettings.EmailHost ?? Environment.GetEnvironmentVariable("EmailHost");
+			var port = _mailSettings.EmailPort != 0 ? _mailSettings.EmailPort : int.Parse(Environment.GetEnvironmentVariable("EmailPort"));
+			var password = _mailSettings.EmailPassword ?? Environment.GetEnvironmentVariable("EmailPassword");
+
+			await smtp.ConnectAsync(host, port, SecureSocketOptions.StartTls);
+			await smtp.AuthenticateAsync(_mailSettings.Email, _mailSettings.EmailPassword);
+
+			await smtp.SendAsync(email);
+			await smtp.DisconnectAsync(true);
 		}
-
-		public IOptions<MailSettings> MailSettings { get; }
-
-		public async Task SendEmailAsync(string emailTo, string subject, string htmlMessage)
+		catch (Exception ex)
 		{
-			MimeMessage email = new();
-
-			email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
-			email.To.Add(MailboxAddress.Parse(emailTo));
-			email.Subject = subject;
-
-			var builder = new BodyBuilder
-			{
-				HtmlBody = htmlMessage
-			};
-
-			email.Body = builder.ToMessageBody();
-
-			try
-			{
-				using var smtp = new SmtpClient();
-				smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-				smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
-
-				await smtp.SendAsync(email);
-
-				smtp.Disconnect(true);
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
+			var error = ex.Message;
+			throw;
 		}
 	}
 }

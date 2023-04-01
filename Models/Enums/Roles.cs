@@ -1,11 +1,11 @@
-﻿namespace BugTracksV3.Models.Enums
+﻿namespace BugTracksV3.Models.Enums;
+
+public enum Roles
 {
-    public enum Roles
-    {
-        Admin,
-        ProjectManager,
-        Developer,
-        Submitter,
-        DemoUser
-    }
+    SuperUser,
+    Admin,
+    ProjectManager,
+    Developer,
+    Submitter,
+    DemoUser
 }
