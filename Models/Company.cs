@@ -12,7 +12,7 @@ public class Company
     [Required]
     [DisplayName("Company Name")]
     [MaxLength(100)]
-    public string Name { get; set; } = string.Empty;
+    public string? Name { get; set; }
 
     [MaxLength(255)]
     [DisplayName("Company Description")]
